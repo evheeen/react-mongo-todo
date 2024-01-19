@@ -2,9 +2,16 @@ class Account
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :username, type: String
-  field :email, type: String
-  field :password_digest, type: String
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+
+  field :email,                  type: String, default: ''
+  field :encrypted_password,     type: String, default: ''
+  field :reset_password_token,   type: String
+  field :reset_password_sent_at, type: Time
+  field :remember_created_at,    type: Time
+
+  field :username,        type: String
 
   has_many :comments
   has_many :projects
@@ -13,7 +20,6 @@ class Account
 
   validates :email,           presence: true,                                      uniqueness: { case_sensitive: false }
   validates :username,        presence: true, length: { minimum: 3, maximum: 15 }, uniqueness: { case_sensitive: false }
-  validates :password_digest, presence: true
 
   validates :email, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/, message: 'Invalid email format' }
 end
