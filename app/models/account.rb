@@ -9,6 +9,7 @@ class Account
   has_many :comments
   has_many :projects
   has_many :tasks
+  has_many :labels
 
   validates :email,           presence: true,                                      uniqueness: { case_sensitive: false }
   validates :username,        presence: true, length: { minimum: 3, maximum: 15 }, uniqueness: { case_sensitive: false }

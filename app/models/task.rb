@@ -13,8 +13,11 @@ class Task
 
   belongs_to :account
   belongs_to :project, optional: true
-  has_and_belongs_to_many :labels
+
   has_many :comments
+
+  embeds_many :label_associations
+  embeds_many :labels, store_as: :label_associations, class_name: 'Label'
 
   validates :status,      presence: true, inclusion: { in: STATUSES }
   validates :priority,    presence: true, inclusion: { in: PRIORITIES }
