@@ -37,11 +37,6 @@
   </div>
 
   <div class="field">
-    <%= form.label :account_id %>
-    <%= form.collection_select :account_id, Account.all, :id, :username %>
-  </div>
-
-  <div class="field">
     <%= form.label :project_id %>
     <%= form.collection_select :project_id, Project.all, :id, :name, include_blank: true %>
   </div>

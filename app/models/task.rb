@@ -23,4 +23,8 @@ class Task
   validates :priority,    presence: true, inclusion: { in: PRIORITIES }
   validates :title,       presence: true, length: { maximum: 90 }
   validates :description,                 length: { maximum: 280 }
+
+  def formatted_due_date
+    due_date.strftime('%B %e, %Y %l:%M %p') if due_date
+  end
 end

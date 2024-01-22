@@ -2,18 +2,18 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.all
+    @tasks = current_account.tasks.includes(:project).order_by(due_date: 1)
   end
 
   def show
   end
 
   def new
-    @task = Task.new
+    @task = current_account.tasks.new
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_account.tasks.new(task_params)
     if @task.save
       redirect_to @task, notice: 'Task was successfully created.'
     else

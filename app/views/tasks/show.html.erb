@@ -5,14 +5,11 @@
 <p><strong>Description:</strong> <%= @task.description %></p>
 <p><strong>Status:</strong> <%= @task.status %></p>
 <p><strong>Priority:</strong> <%= @task.priority %></p>
-<p><strong>Due Date:</strong> <%= @task.due_date %></p>
+<p><strong>Due Date:</strong> <%= @task.formatted_due_date %></p>
 <p><strong>Account:</strong> <%= @task.account.username %></p>
 <p><strong>Project:</strong> <%= @task&.project&.name %></p>
+<p><strong>Labels:</strong> <%= @task.labels&.map(&:name)&.join(' ') %></p>
 
 <%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
-<%= button_to 'Destroy',
-              @task, method: :delete,
-              data: { confirm: 'Are you sure?' },
-              class: 'btn btn-danger',
-              style: 'margin-top: 10px;' %>
+<%= link_to 'Back', tasks_path %> |
+<%= link_to 'Destroy', @task, method: :delete, data: { confirm: 'Are you sure?' } %>
