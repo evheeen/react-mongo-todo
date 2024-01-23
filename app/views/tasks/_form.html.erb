@@ -38,7 +38,15 @@
 
   <div class="field">
     <%= form.label :project_id %>
-    <%= form.collection_select :project_id, Project.all, :id, :name, include_blank: true %>
+    <%= form.collection_select :project_id, current_account.projects, :id, :name, include_blank: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :labels, 'Labels' %>
+    <% current_account.labels.each do |label| %>
+      <%= form.check_box :label_ids, { multiple: true, checked: task.labels.include?(label) }, label.id, nil %>
+      <%= label.name %>
+    <% end %>
   </div>
 
   <div class="actions">

@@ -15,6 +15,7 @@ class TasksController < ApplicationController
   def create
     @task = current_account.tasks.new(task_params)
     if @task.save
+      manage_labels(@task)
       redirect_to @task, notice: 'Task was successfully created.'
     else
       render :new
@@ -26,6 +27,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
+      manage_labels(@task)
       redirect_to @task, notice: 'Task was successfully updated.'
     else
       render :edit
@@ -45,5 +47,11 @@ class TasksController < ApplicationController
 
     def task_params
       params.require(:task).permit(:title, :description, :due_date, :status, :priority, :account_id, :project_id)
+    end
+
+    def manage_labels(task)
+      return task.set(labels: []) if params[:task][:label_ids].nil?
+      
+      task.labels = current_account.labels.in(id: params[:task][:label_ids])
     end
 end

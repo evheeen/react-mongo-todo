@@ -1,5 +1,3 @@
-<p style="color: green"><%= notice %></p>
-
 <h1><%= @task.title %></h1>
 
 <p><strong>Description:</strong> <%= @task.description %></p>
@@ -8,7 +6,7 @@
 <p><strong>Due Date:</strong> <%= @task.formatted_due_date %></p>
 <p><strong>Account:</strong> <%= @task.account.username %></p>
 <p><strong>Project:</strong> <%= @task&.project&.name %></p>
-<p><strong>Labels:</strong> <%= @task.labels&.map(&:name)&.join(' ') %></p>
+<p><strong>Labels:</strong> <%= @task.labels&.map(&:name)&.join(' | ') %></p>
 
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %> |
