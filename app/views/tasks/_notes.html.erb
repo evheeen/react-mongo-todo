@@ -1,0 +1,5 @@
+<% if notes.present? %>
+  <% notes.each do |note| %>
+    <p><%= note.body %></p>
+  <% end %>
+<% end %>
