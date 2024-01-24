@@ -13,7 +13,6 @@ class Account
 
   field :username,        type: String
 
-  has_many :comments
   has_many :projects
   has_many :tasks
   has_many :labels

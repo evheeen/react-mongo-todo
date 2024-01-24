@@ -1,0 +1,10 @@
+<%= form_with(model: [task, comment], url: task_comments_path(task)) do |form| %>
+  <div class="field">
+    <%= form.label :body %>
+    <%= form.text_area :body, rows: 1 %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Add Comment' %>
+  </div>
+<% end %>

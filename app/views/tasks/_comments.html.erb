@@ -1,0 +1,5 @@
+<% if comments.present? %>
+  <% comments.each do |comment| %>
+    <p><%= "#{comment.account.username} : #{comment.body}" %></p>
+  <% end %>
+<% end %>

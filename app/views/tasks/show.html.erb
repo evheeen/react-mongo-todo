@@ -8,6 +8,14 @@
 <p><strong>Project:</strong> <%= @task&.project&.name %></p>
 <p><strong>Labels:</strong> <%= @task.labels&.map(&:name)&.join(' | ') %></p>
 
+<hr/>
+
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %> |
 <%= link_to 'Destroy', @task, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+<hr/>
+
+<p><strong>Comments</strong></p>
+<%= render partial: 'comments', locals: { comments: @comments } %>
+<%= render partial: 'comments/form', locals: { task: @task, comment: @comment } %>

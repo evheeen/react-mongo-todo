@@ -5,7 +5,8 @@ class Comment
   field :body, type: String
 
   belongs_to :account
-  belongs_to :task
+
+  embedded_in :task
 
   validates :body, presence: true, length: { maximum: 280 }
 end

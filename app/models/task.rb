@@ -14,8 +14,7 @@ class Task
   belongs_to :account
   belongs_to :project, optional: true
 
-  has_many :comments
-
+  embeds_many :comments
   embeds_many :label_associations
   embeds_many :labels, store_as: :label_associations, class_name: 'Label'
 
