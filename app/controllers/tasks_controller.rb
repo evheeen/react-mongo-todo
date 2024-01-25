@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = current_account.tasks.includes(:project).order_by(due_date: 1)
+    @tasks = current_account.tasks.includes(:project, :labels).order_by(due_date: 1)
   end
 
   def show
