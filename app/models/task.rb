@@ -18,6 +18,8 @@ class Task
 
   has_and_belongs_to_many :labels
 
+  accepts_nested_attributes_for :labels, allow_destroy: false
+
   validates :status,      presence: true, inclusion: { in: STATUSES }
   validates :priority,    presence: true, inclusion: { in: PRIORITIES }
   validates :title,       presence: true, length: { maximum: 90 }
