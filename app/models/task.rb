@@ -15,8 +15,8 @@ class Task
   belongs_to :project, optional: true
 
   embeds_many :notes
-  embeds_many :label_associations
-  embeds_many :labels, store_as: :label_associations, class_name: 'Label'
+
+  has_and_belongs_to_many :labels
 
   validates :status,      presence: true, inclusion: { in: STATUSES }
   validates :priority,    presence: true, inclusion: { in: PRIORITIES }
