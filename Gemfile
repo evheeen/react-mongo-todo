@@ -7,7 +7,7 @@ ruby "3.2.1"
 gem "rails", "~> 7.0.7", ">= 7.0.7.2"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails"
+# gem "sprockets-rails"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
@@ -44,8 +44,9 @@ gem "bootsnap", require: false
 
 gem 'mongoid'
 gem 'devise'
-gem 'jquery-rails'
 gem 'cocoon'
+gem 'vite_ruby'
+gem 'vite_rails'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
