@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "@nathanvda/cocoon": "^1.2.14",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "vite-plugin-full-reload": "^1.1.0"
   },
   "devDependencies": {

@@ -45,6 +45,7 @@ gem "bootsnap", require: false
 gem 'mongoid'
 gem 'devise'
 gem 'cocoon'
+gem 'rack-cors'
 gem 'vite_ruby'
 gem 'vite_rails'
 
