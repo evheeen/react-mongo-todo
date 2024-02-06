@@ -13,7 +13,7 @@ gem "rails", "~> 7.0.7", ">= 7.0.7.2"
 gem "puma", "~> 5.0"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem "importmap-rails"
+# gem "importmap-rails"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 # gem "turbo-rails"
@@ -44,10 +44,7 @@ gem "bootsnap", require: false
 
 gem 'mongoid'
 gem 'devise'
-gem 'cocoon'
 gem 'rack-cors'
-gem 'vite_ruby'
-gem 'vite_rails'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
