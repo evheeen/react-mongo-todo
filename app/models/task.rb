@@ -11,7 +11,7 @@ class Task
   field :status, type: StringifiedSymbol, default: :pending
   field :priority, type: StringifiedSymbol, default: :medium
 
-  belongs_to :account
+  # belongs_to :account
   belongs_to :project, optional: true
 
   embeds_many :notes
