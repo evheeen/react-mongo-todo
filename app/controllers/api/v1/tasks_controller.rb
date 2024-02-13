@@ -3,18 +3,15 @@ module Api
     class TasksController < ApplicationController
       before_action :set_task, only: %i[show update destroy]
 
-      # GET /api/v1/tasks
       def index
         @tasks = Task.all
         render json: @tasks
       end
 
-      # GET /tasks/1
       def show
         render json: @task
       end
 
-      # POST /tasks
       def create
         @task = Task.new(task_params)
 
@@ -25,7 +22,6 @@ module Api
         end
       end
 
-      # PATCH/PUT /tasks/1
       def update
         if @task.update(task_params)
           render json: @task
@@ -34,7 +30,6 @@ module Api
         end
       end
 
-      # DELETE /tasks/1
       def destroy
         @task.destroy
       end
