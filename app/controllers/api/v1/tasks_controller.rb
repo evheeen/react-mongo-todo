@@ -1,7 +1,11 @@
 module Api
   module V1
     class TasksController < ApplicationController
+      skip_before_action :verify_authenticity_token
+
       before_action :set_task, only: %i[show update destroy]
+
+      protect_from_forgery except: %i[create update]
 
       # GET /api/v1/tasks
       def index
@@ -19,7 +23,7 @@ module Api
         @task = Task.new(task_params)
 
         if @task.save
-          render json: @task, status: :created, location: @task
+          render json: @task, status: :created, location: api_v1_tasks_url(@task)
         else
           render json: @task.errors, status: :unprocessable_entity
         end

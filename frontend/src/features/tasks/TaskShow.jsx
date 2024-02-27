@@ -48,7 +48,7 @@ function TaskShow () {
         </tr>
       </thead>
       <tbody>
-        <tr key={task.id}>
+        <tr key={task._id.$oid}>
           <td>{task.title}</td>
           <td>{task.description}</td>
           <td>{task.due_date}</td>
