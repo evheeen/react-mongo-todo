@@ -1,14 +1,18 @@
+import { BrowserRouter as Router } from 'react-router-dom'
+
 import './App.css'
-import TasksIndex from './features/TasksIndex/index'
+import AppRoutes from './components/AppRoutes'
+import NavBar from './components/NavBar'
 
 function App() {
   return (
-    <>
+    <Router>
       <div>
         <h1>React on Rails todo</h1>
-        <TasksIndex/>
+        <NavBar/>
+        <AppRoutes/>
       </div>
-    </>
+    </Router>
   )
 }
 

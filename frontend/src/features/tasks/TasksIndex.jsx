@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+
 import { API_URL } from '../../constants'
 
 function TasksIndex () {
   const [tasks, setTasks] = useState([])
-  const [, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
   const [, setError] = useState(null)
 
   useEffect(() => {
@@ -13,6 +15,7 @@ function TasksIndex () {
         if (response.ok) {
           const json = await response.json()
           setTasks(json)
+          setLoading(false)
         } else {
           throw response
         }
@@ -26,6 +29,8 @@ function TasksIndex () {
 
     loadTasks()
   }, [])
+
+  if (loading) return <div>Loading...</div>
 
   return (
     <table>
@@ -51,7 +56,7 @@ function TasksIndex () {
             <td>{task.priority}</td>
             <td></td>
             <td></td>
-            <td></td>
+            <td><Link to={`/tasks/${task._id.$oid}`}>Show</Link></td>
           </tr>
         ))}
       </tbody>
