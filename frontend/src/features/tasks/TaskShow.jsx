@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
 import { API_URL } from '../../constants'
 
@@ -56,7 +56,7 @@ function TaskShow () {
           <td>{task.priority}</td>
           <td></td>
           <td></td>
-          <td></td>
+          <td><Link to={`/tasks/${task._id.$oid}/edit`}>Edit</Link></td>
         </tr>
       </tbody>
     </table>

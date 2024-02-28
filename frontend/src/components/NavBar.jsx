@@ -5,7 +5,7 @@ function NavBar() {
     <nav>
       <Link to='/'>Index</Link>
       {' | '}
-      <Link to='/new'>New</Link>
+      <Link to='tasks/new'>New</Link>
     </nav>
   )
 }

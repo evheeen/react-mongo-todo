@@ -1,41 +1,57 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import { API_URL } from '../../constants'
 
-function TaskNew () {
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [dueDate, setDueDate] = useState('')
-  const [status, setStatus] = useState('pending')
-  const [priority, setPriority] = useState('medium')
-  const [projectId, setProjectId] = useState('')
-  const [labelIds, setLabelIds] = useState([])
+function TaskEdit () {
+  const [task, setTask] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [, setError] = useState(null)
+
+  const { id } = useParams()
 
   const navigate = useNavigate()
 
   const statuses = ['pending', 'in_progress', 'completed', 'cancelled']
   const priorities = ['lowest', 'low', 'medium', 'high', 'highest']
 
+  useEffect(() => {
+    const fetchTask = async () => {
+      try {
+        const response = await fetch(`${API_URL}/tasks/${id}`)
+        if (response.ok) {
+          const json = await response.json()
+          setTask(json)
+          setLoading(false)
+        } else {
+          throw response
+        }
+      } catch (e) {
+        setError('Task loading error')
+        console.log('Task loading error:', e)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTask()
+  }, [id])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const taskData = {
-      title,
-      description,
-      due_date: dueDate,
-      status,
-      priority,
-      project_id: projectId,
-      label_ids: labelIds
-    }
-
-    const response = await fetch(`${API_URL}/tasks`, {
-      method: 'POST',
+    const response = await fetch(`${API_URL}/tasks/${id}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(taskData),
+      body: JSON.stringify({
+        title: task.title,
+        description: task.description,
+        due_date: task.due_date,
+        status: task.status,
+        priority: task.priority
+      }),
     })
 
     if (response.ok) {
@@ -46,17 +62,19 @@ function TaskNew () {
     }
   }
 
+  if (loading) return <div>Loading...</div>
+
   return (
     <div>
-      <h2>Create a New Task</h2>
+      <h2>Edit Task</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="titleInput">Title:</label>
           <input
             id="titleInput"
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={task.title}
+            onChange={(e) => setTask({ ...task, title: e.target.value })}
             required
           />
         </div>
@@ -64,8 +82,8 @@ function TaskNew () {
           <label htmlFor="descriptionInput">Description:</label>
           <textarea
             id="descriptionInput"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={task.description}
+            onChange={(e) => setTask({ ...task, description: e.target.value })}
           />
         </div>
         <div>
@@ -73,16 +91,16 @@ function TaskNew () {
           <input
             id="dueDateInput"
             type="datetime-local"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
+            value={task.dueDate}
+            onChange={(e) => setTask({ ...task, dueDate: e.target.value })}
           />
         </div>
         <div>
           <label htmlFor="statusInput">Status:</label>
           <select
             id="statusInput"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
+            value={task.status}
+            onChange={(e) => setTask({ ...task, status: e.target.value })}
           >
             <option value="">Select Status</option>
             {statuses.map((statusOption, index) => (
@@ -94,8 +112,8 @@ function TaskNew () {
           <label htmlFor="priorityInput">Priority:</label>
           <select
             id="priorityInput"
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
+            value={task.priority}
+            onChange={(e) => setTask({ ...task, priority: e.target.value })}
           >
             <option value="">Select Priority</option>
             {priorities.map((priorityOption, index) => (
@@ -107,8 +125,8 @@ function TaskNew () {
           <label htmlFor="projectIdInput">Project:</label>
           <select
             id="projectIdInput"
-            value={projectId}
-            onChange={(e) => setProjectId(e.target.value)}
+            value={task.projectId}
+            onChange={(e) => setTask({ ...task, projectId: e.target.value })}
           >
             <option value="">Select Project</option>
             {/* Add options for projects */}
@@ -121,11 +139,11 @@ function TaskNew () {
           {/* Handle checkbox changes */}
         </div>
         <div>
-          <button type="submit">Create Task</button>
+          <button type="submit">Edit Task</button>
         </div>
       </form>
     </div>
   )
 }
 
-export default TaskNew
+export default TaskEdit
