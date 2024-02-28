@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 
 import { API_URL } from '../../constants'
 
@@ -8,6 +8,8 @@ function TaskShow () {
   const [loading, setLoading] = useState(true)
   const [, setError] = useState(null)
   const { id } = useParams()
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -30,6 +32,18 @@ function TaskShow () {
 
     fetchTask()
   }, [id])
+
+  const deleteTask = async () => {
+    const response = await fetch(`${API_URL}/tasks/${id}`, {
+      method: 'DELETE'
+    })
+
+    if (response.ok) {
+      navigate(`/`)
+    } else {
+      console.log('An error occurred.')
+    }
+  }
 
   if (loading) return <div>Loading...</div>
 
@@ -56,7 +70,11 @@ function TaskShow () {
           <td>{task.priority}</td>
           <td></td>
           <td></td>
-          <td><Link to={`/tasks/${task._id.$oid}/edit`}>Edit</Link></td>
+          <td>
+            <Link to={`/tasks/${task._id.$oid}/edit`}>Edit</Link>
+            {' | '}
+            <button onClick={deleteTask}>Delete</button>
+          </td>
         </tr>
       </tbody>
     </table>
