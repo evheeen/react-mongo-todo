@@ -1,26 +1,18 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-import { API_URL } from '../../constants'
+import { fetchAllTasks } from '../../services/taskService'
 
 function TasksIndex () {
   const [tasks, setTasks] = useState([])
   const [loading, setLoading] = useState(true)
-  const [, setError] = useState(null)
 
   useEffect(() => {
     async function loadTasks () {
       try {
-        const response = await fetch(`${API_URL}/tasks`)
-        if (response.ok) {
-          const json = await response.json()
-          setTasks(json)
-          setLoading(false)
-        } else {
-          throw response
-        }
+        const data = await fetchAllTasks()
+        setTasks(data)
       } catch (e) {
-        setError('Tasks loading error')
         console.log('Tasks loading error:', e)
       } finally {
         setLoading(false)

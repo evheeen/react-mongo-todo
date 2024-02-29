@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { API_URL } from '../../constants'
+import { createTask } from '../../services/taskService'
 
 function TaskNew () {
   const [title, setTitle] = useState('')
@@ -10,7 +10,7 @@ function TaskNew () {
   const [status, setStatus] = useState('pending')
   const [priority, setPriority] = useState('medium')
   const [projectId, setProjectId] = useState('')
-  const [labelIds, setLabelIds] = useState([])
+  // const [labelIds, setLabelIds] = useState([])
 
   const navigate = useNavigate()
 
@@ -27,22 +27,14 @@ function TaskNew () {
       status,
       priority,
       project_id: projectId,
-      label_ids: labelIds
+      // label_ids: labelIds
     }
 
-    const response = await fetch(`${API_URL}/tasks`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(taskData),
-    })
-
-    if (response.ok) {
-      const { _id } = await response.json()
-      navigate(`/tasks/${_id.$oid}`)
-    } else {
-      console.log('An error occurred.')
+    try {
+      const response = await createTask(taskData)
+      navigate(`/tasks/${response._id.$oid}`)
+    } catch (e) {
+      console.error(e)
     }
   }
 

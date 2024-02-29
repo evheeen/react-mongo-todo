@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
-import { API_URL } from '../../constants'
+import { fetchTask, updateTask } from '../../services/taskService'
 
 function TaskEdit () {
   const [task, setTask] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [, setError] = useState(null)
 
   const { id } = useParams()
 
@@ -16,49 +15,28 @@ function TaskEdit () {
   const priorities = ['lowest', 'low', 'medium', 'high', 'highest']
 
   useEffect(() => {
-    const fetchTask = async () => {
+    const loadTask = async () => {
       try {
-        const response = await fetch(`${API_URL}/tasks/${id}`)
-        if (response.ok) {
-          const json = await response.json()
-          setTask(json)
-          setLoading(false)
-        } else {
-          throw response
-        }
+        const data = await fetchTask(id)
+        setTask(data)
       } catch (e) {
-        setError('Task loading error')
         console.log('Task loading error:', e)
       } finally {
         setLoading(false)
       }
     }
 
-    fetchTask()
+    loadTask()
   }, [id])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const response = await fetch(`${API_URL}/tasks/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title: task.title,
-        description: task.description,
-        due_date: task.due_date,
-        status: task.status,
-        priority: task.priority
-      }),
-    })
-
-    if (response.ok) {
-      const { _id } = await response.json()
-      navigate(`/tasks/${_id.$oid}`)
-    } else {
-      console.log('An error occurred.')
+    try {
+      await await updateTask(id, task)
+      navigate(`/tasks/${id}`)
+    } catch (e) {
+      console.error(e)
     }
   }
 

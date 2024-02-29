@@ -1,47 +1,36 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 
-import { API_URL } from '../../constants'
+import { fetchTask, deleteTask } from '../../services/taskService'
 
 function TaskShow () {
   const [task, setTask] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [, setError] = useState(null)
   const { id } = useParams()
 
   const navigate = useNavigate()
 
   useEffect(() => {
-    const fetchTask = async () => {
+    const loadTask = async () => {
       try {
-        const response = await fetch(`${API_URL}/tasks/${id}`)
-        if (response.ok) {
-          const json = await response.json()
-          setTask(json)
-          setLoading(false)
-        } else {
-          throw response
-        }
+        const data = await fetchTask(id)
+        setTask(data)
       } catch (e) {
-        setError('Task loading error')
         console.log('Task loading error:', e)
       } finally {
         setLoading(false)
       }
     }
 
-    fetchTask()
+    loadTask()
   }, [id])
 
-  const deleteTask = async () => {
-    const response = await fetch(`${API_URL}/tasks/${id}`, {
-      method: 'DELETE'
-    })
-
-    if (response.ok) {
+  const deleteTaskHandler = async () => {
+    try {
+      await deleteTask(id)
       navigate(`/`)
-    } else {
-      console.log('An error occurred.')
+    } catch (e) {
+      console.error(e)
     }
   }
 
@@ -73,7 +62,7 @@ function TaskShow () {
           <td>
             <Link to={`/tasks/${task._id.$oid}/edit`}>Edit</Link>
             {' | '}
-            <button onClick={deleteTask}>Delete</button>
+            <button onClick={deleteTaskHandler}>Delete</button>
           </td>
         </tr>
       </tbody>
