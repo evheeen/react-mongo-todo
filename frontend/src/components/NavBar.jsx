@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-function NavBar() {
+function NavBar () {
   return (
     <nav>
       <Link to='/'>Index</Link>
