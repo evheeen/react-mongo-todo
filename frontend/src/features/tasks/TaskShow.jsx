@@ -28,13 +28,14 @@ function TaskShow () {
   const deleteTaskHandler = async () => {
     try {
       await deleteTask(id)
-      navigate(`/`)
+      navigate('/')
     } catch (e) {
       console.error(e)
     }
   }
 
   if (loading) return <div>Loading...</div>
+  if (!task) return <div>Task not found</div>
 
   return (
     <table>

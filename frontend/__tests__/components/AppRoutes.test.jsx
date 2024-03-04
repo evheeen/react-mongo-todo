@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom'
 import AppRoutes from '../../src/components/AppRoutes'
 
 jest.mock('../../src/constants', () => ({
-  API_URL: 'http://your-test-api-url',
+  API_URL: 'http://test-api-url',
 }))
 
 jest.mock('../../src/features/tasks/TasksIndex', () => ({
