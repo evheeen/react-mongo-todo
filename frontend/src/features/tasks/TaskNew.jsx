@@ -34,7 +34,7 @@ function TaskNew () {
       const response = await createTask(taskData)
       navigate(`/tasks/${response._id.$oid}`)
     } catch (e) {
-      console.error(e)
+      console.log('Task creating error:', e)
     }
   }
 

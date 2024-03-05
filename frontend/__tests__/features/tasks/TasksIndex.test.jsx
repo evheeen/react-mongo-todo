@@ -10,7 +10,7 @@ jest.mock('../../../src/constants', () => ({
   API_URL: 'http://test-api-url',
 }))
 
-describe('TasksIndex component', () => {
+describe('TasksIndex feature', () => {
   test('renders loading message while tasks are loading', () => {
     render(<TasksIndex />, { wrapper: MemoryRouter })
     expect(screen.getByText('Loading...')).toBeInTheDocument()

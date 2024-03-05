@@ -36,11 +36,12 @@ function TaskEdit () {
       await await updateTask(id, task)
       navigate(`/tasks/${id}`)
     } catch (e) {
-      console.error(e)
+      console.log('Task creating error:', e)
     }
   }
 
   if (loading) return <div>Loading...</div>
+  if (!task) return <div>Task not found</div>
 
   return (
     <div>

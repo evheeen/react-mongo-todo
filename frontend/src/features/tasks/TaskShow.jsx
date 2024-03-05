@@ -30,7 +30,7 @@ function TaskShow () {
       await deleteTask(id)
       navigate('/')
     } catch (e) {
-      console.error(e)
+      console.log('Task deleting error:', e)
     }
   }
 
