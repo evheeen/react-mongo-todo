@@ -1,4 +1,5 @@
 import { render, screen, waitFor, fireEvent } from '@testing-library/react'
+import { act } from 'react-dom/test-utils'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 
 import { fetchTask, deleteTask } from '../../../src/services/taskService'
@@ -21,7 +22,7 @@ describe('TaskShow feature', () => {
       _id: { $oid: '1' },
       title: 'Task 1',
       description: 'Description 1',
-      due_date: '2024-01-01',
+      due_date: '2024-01-01T12:00',
       status: 'pending',
       priority: 'medium',
     }
@@ -83,7 +84,7 @@ describe('TaskShow feature', () => {
       _id: { $oid: '1' },
       title: 'Task 1',
       description: 'Description 1',
-      due_date: '2024-01-01',
+      due_date: '2024-01-01T12:00',
       status: 'pending',
       priority: 'medium',
     }
@@ -104,7 +105,9 @@ describe('TaskShow feature', () => {
       expect(screen.queryByText('Loading...')).toBeNull()
     })
 
-    fireEvent.click(screen.getByText('Delete'))
+    await act(async () => {
+      fireEvent.click(screen.getByText('Delete'))
+    })
 
     expect(deleteTask).toHaveBeenCalledWith(task._id.$oid)
   })
@@ -114,7 +117,7 @@ describe('TaskShow feature', () => {
       _id: { $oid: '1' },
       title: 'Task 1',
       description: 'Description 1',
-      due_date: '2024-01-01',
+      due_date: '2024-01-01T12:00',
       status: 'pending',
       priority: 'medium',
     }
@@ -137,7 +140,9 @@ describe('TaskShow feature', () => {
       expect(screen.queryByText('Loading...')).toBeNull()
     })
 
-    fireEvent.click(screen.getByText('Delete'))
+    await act(async () => {
+      fireEvent.click(screen.getByText('Delete'))
+    })
 
     await waitFor(() => {
       expect(deleteTask).toHaveBeenCalledWith(task._id.$oid)

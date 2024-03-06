@@ -36,7 +36,7 @@ function TaskEdit () {
       await await updateTask(id, task)
       navigate(`/tasks/${id}`)
     } catch (e) {
-      console.log('Task creating error:', e)
+      console.log('Task updating error:', e)
     }
   }
 
@@ -105,7 +105,7 @@ function TaskEdit () {
           <select
             id="projectIdInput"
             value={task.projectId}
-            onChange={(e) => setTask({ ...task, projectId: e.target.value })}
+            // onChange={(e) => setTask({ ...task, projectId: e.target.value })}
           >
             <option value="">Select Project</option>
             {/* Add options for projects */}
