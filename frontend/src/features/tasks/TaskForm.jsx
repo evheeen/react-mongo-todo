@@ -6,7 +6,7 @@ function TaskForm ({ task, action, onSubmit }) {
     task || {
       title: '',
       description: '',
-      dueDate: '',
+      due_date: '',
       status: 'pending',
       priority: 'medium',
       project_id: ''
@@ -46,8 +46,8 @@ function TaskForm ({ task, action, onSubmit }) {
           <input
             id="dueDateInput"
             type="datetime-local"
-            value={formData.dueDate}
-            onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
+            value={formData.due_date}
+            onChange={(e) => setFormData({ ...formData, due_date: e.target.value })}
           />
         </div>
         <div>
@@ -80,8 +80,8 @@ function TaskForm ({ task, action, onSubmit }) {
           <label htmlFor="projectIdInput">Project:</label>
           <select
             id="projectIdInput"
-            value={formData.projectId}
-            onChange={(e) => setFormData({ ...formData, projectId: e.target.value })}
+            value={formData.project_id}
+            onChange={(e) => setFormData({ ...formData, project_id: e.target.value })}
           >
             <option value="">Select Project</option>
             {/* Add options for projects */}
@@ -94,7 +94,7 @@ function TaskForm ({ task, action, onSubmit }) {
           {/* Handle checkbox changes */}
         </div>
         <div>
-          <button type="submit">{action === 'new' ? 'Create task' : 'Update Task'}</button>
+          <button type="submit">{action === 'new' ? 'Create Task' : 'Update Task'}</button>
         </div>
       </form>
     </div>
@@ -105,7 +105,7 @@ TaskForm.propTypes = {
   task: PropTypes.shape({
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
-    dueDate: PropTypes.string,
+    due_date: PropTypes.string,
     status: PropTypes.string,
     priority: PropTypes.string,
     project_id: PropTypes.string,

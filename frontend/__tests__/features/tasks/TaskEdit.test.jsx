@@ -22,7 +22,7 @@ describe('TaskEdit feature', () => {
       _id: { $oid: '1' },
       title: 'Test Task',
       description: 'Test Description',
-      dueDate: '2024-01-01T12:00',
+      due_date: '2024-01-01T12:00',
       status: 'pending',
       priority: 'medium'
     }
@@ -75,7 +75,7 @@ describe('TaskEdit feature', () => {
       _id: { $oid: '1' },
       title: 'Test Task',
       description: 'Test Description',
-      dueDate: '2024-01-01T12:00',
+      due_date: '2024-01-01T12:00',
       status: 'pending',
       priority: 'medium'
     }
@@ -104,14 +104,14 @@ describe('TaskEdit feature', () => {
       fireEvent.change(screen.getByLabelText('Due Date:'), { target: { value: '2024-01-01T20:24' } })
       fireEvent.change(screen.getByLabelText('Status:'), { target: { value: 'completed' } })
       fireEvent.change(screen.getByLabelText('Priority:'), { target: { value: 'low' } })
-      fireEvent.submit(screen.getByRole('button', { name: 'Edit Task' }))
+      fireEvent.submit(screen.getByRole('button', { name: 'Update Task' }))
     })
 
     await waitFor(() => {
       expect(updateTask).toHaveBeenCalledWith('1', { ...mockedTask,
                                                      title: 'Updated Task Title',
                                                      description: 'Updated Test Description',
-                                                     dueDate: '2024-01-01T20:24',
+                                                     due_date: '2024-01-01T20:24',
                                                      status: 'completed',
                                                      priority: 'low' })
       expect(screen.getByText('Updated Task Page')).toBeInTheDocument()
@@ -123,7 +123,7 @@ describe('TaskEdit feature', () => {
       _id: { $oid: '1' },
       title: 'Test Task',
       description: 'Test Description',
-      dueDate: '2024-01-01T12:00',
+      due_date: '2024-01-01T12:00',
       status: 'pending',
       priority: 'medium'
     }
@@ -147,7 +147,7 @@ describe('TaskEdit feature', () => {
     })
 
     await act(async () => {
-      fireEvent.submit(screen.getByRole('button', { name: 'Edit Task' }))
+      fireEvent.submit(screen.getByRole('button', { name: 'Update Task' }))
     })
 
     await waitFor(() => {
