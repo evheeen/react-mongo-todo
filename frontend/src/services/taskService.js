@@ -72,4 +72,12 @@ async function deleteTask (id) {
   return response.json()
 }
 
-export { fetchAllTasks, fetchTask, createTask, updateTask, deleteTask }
+async function searchTasks (query) {
+  const response = await fetch(`${API_URL}/search/tasks/?q=${query}`);
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+  return response.json();
+}
+
+export { fetchAllTasks, fetchTask, createTask, updateTask, deleteTask, searchTasks }

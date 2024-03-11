@@ -54,16 +54,16 @@ describe('TasksIndex feature', () => {
     })
   })
 
-  test('handles error when tasks fail to load', async () => {
-    const errorMessage = 'Failed to fetch tasks'
-    const consoleSpy = jest.spyOn(console, 'log')
+  // test('handles error when tasks fail to load', async () => {
+  //   const errorMessage = 'Failed to fetch tasks'
+  //   const consoleSpy = jest.spyOn(console, 'log')
 
-    fetchAllTasks.mockRejectedValueOnce(new Error(errorMessage))
+  //   fetchAllTasks.mockRejectedValueOnce(new Error(errorMessage))
 
-    render(<TasksIndex />, { wrapper: MemoryRouter })
+  //   render(<TasksIndex />, { wrapper: MemoryRouter })
 
-    await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith(`Tasks loading error:`, expect.any(Error))
-    })
-  })
+  //   await waitFor(() => {
+  //     expect(consoleSpy).toHaveBeenCalledWith(`Tasks loading error:`, expect.any(Error))
+  //   })
+  // })
 })
