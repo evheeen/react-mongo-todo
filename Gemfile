@@ -22,7 +22,7 @@ gem "puma", "~> 5.0"
 # gem "stimulus-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder"
+# gem "jbuilder"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -42,8 +42,10 @@ gem "bootsnap", require: false
 # Use Sass to process CSS
 # gem "sassc-rails"
 
-gem 'mongoid'
 gem 'devise'
+gem 'devise-jwt'
+gem 'jsonapi-serializer'
+gem 'mongoid'
 gem 'rack-cors'
 
 group :development, :test do
