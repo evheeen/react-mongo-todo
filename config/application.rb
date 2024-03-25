@@ -38,7 +38,12 @@ module ReactMongoTodo
     # Enable per-form CSRF tokens. Previous versions had false.
     config.action_controller.per_form_csrf_tokens = false
 
-    # Enable origin-checking CSRF mitigation. Previous versions had false.
-    config.action_controller.forgery_protection_origin_check = false
+    # # This also configures session_options for use below
+    # config.session_store :cookie_store, key: '_interslice_session'
+
+    # # Required for all session management (regardless of session_store)
+    # config.middleware.use ActionDispatch::Cookies
+
+    # config.middleware.use config.session_store, config.session_options
   end
 end
