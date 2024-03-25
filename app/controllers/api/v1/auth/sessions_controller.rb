@@ -1,12 +1,5 @@
 class Api::V1::Auth::SessionsController < Devise::SessionsController
-  respond_to :json
-
   skip_before_action :verify_authenticity_token
-
-  # GET /resource/sign_in
-  # def new
-  #   super
-  # end
 
   # POST /resource/sign_in
   # def create
@@ -40,7 +33,7 @@ class Api::V1::Auth::SessionsController < Devise::SessionsController
       if current_account
         render json: {
           status: 200,
-          message: "Logged out successfully"
+          message: 'Logged out successfully'
         }, status: :ok
       else
         render json: {
