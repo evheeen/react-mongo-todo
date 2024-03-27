@@ -22,8 +22,16 @@ class Account
   has_many :tasks
   has_many :labels
 
-  validates :email,           presence: true,                                      uniqueness: { case_sensitive: false }
-  validates :username,        presence: true, length: { minimum: 3, maximum: 15 }, uniqueness: { case_sensitive: false }
+  validates :email,    presence: true,                                      uniqueness: { case_sensitive: false }
+  validates :username, presence: true, length: { minimum: 3, maximum: 15 }, uniqueness: { case_sensitive: false }
 
   validates :email, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/, message: 'Invalid email format' }
+
+  def self.primary_key
+    '_id'
+  end
+
+  def self.revoke_jwt(_payload, account)
+    account.update_attribute(:jti, generate_jti)
+  end
 end
