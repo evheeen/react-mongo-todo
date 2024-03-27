@@ -1,10 +1,10 @@
 class Api::V1::Auth::RegistrationsController < Devise::RegistrationsController
-  skip_before_action :verify_authenticity_token
+  respond_to :json
 
   protected
 
     def sign_up_params
-      params.require(:registration).require(:account).permit(:email, :password, :password_confirmation, :username)
+      params.require(:account).permit(:email, :password, :password_confirmation, :username)
     end
 
   private
