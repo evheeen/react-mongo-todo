@@ -2,8 +2,8 @@ class Task
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  STATUSES   = %i[pending in_progress completed cancelled]
-  PRIORITIES = %i[lowest low medium high highest]
+  STATUSES   = %i[pending in_progress completed cancelled].freeze
+  PRIORITIES = %i[lowest low medium high highest].freeze
 
   field :title, type: String
   field :description, type: String
@@ -26,6 +26,6 @@ class Task
   validates :description,                 length: { maximum: 280 }
 
   def formatted_due_date
-    due_date.strftime('%B %e, %Y %l:%M %p') if due_date
+    due_date&.strftime('%B %e, %Y %l:%M %p')
   end
 end
