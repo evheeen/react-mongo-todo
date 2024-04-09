@@ -24,7 +24,7 @@ async function createTask (data) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(data)
   })
 
   if (!response.ok) {
@@ -73,11 +73,11 @@ async function deleteTask (id) {
 }
 
 async function searchTasks (query) {
-  const response = await fetch(`${API_URL}/search/tasks/?q=${query}`);
+  const response = await fetch(`${API_URL}/search/tasks/?q=${query}`)
   if (!response.ok) {
-    throw new Error(response.statusText);
+    throw new Error(response.statusText)
   }
-  return response.json();
+  return response.json()
 }
 
 export { fetchAllTasks, fetchTask, createTask, updateTask, deleteTask, searchTasks }

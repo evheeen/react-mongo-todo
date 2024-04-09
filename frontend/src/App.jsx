@@ -7,11 +7,9 @@ import NavBar from './components/NavBar'
 function App() {
   return (
     <Router>
-      <div>
-        <h1>React on Rails todo</h1>
-        <NavBar/>
-        <AppRoutes/>
-      </div>
+      <h1>React on Rails todo</h1>
+      <NavBar/>
+      <AppRoutes/>
     </Router>
   )
 }
