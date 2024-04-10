@@ -26,7 +26,8 @@ function SignIn () {
     console.log(response)
 
     if (response.status.code == 200) {
-      setAuth({ email: response.data.email, accessToken: response.data.accessToken })
+      setAuth({ email: response.data.email, accessToken: response.data.access_token })
+      localStorage.setItem('_authToken', response.data.access_token)
       navigate('/')
       setEmail('')
       setPassword('')

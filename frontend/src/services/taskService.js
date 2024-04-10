@@ -1,7 +1,13 @@
 import { API_URL } from '../constants'
 
 async function fetchAllTasks () {
-  const response = await fetch(`${API_URL}/tasks`)
+  const response = await fetch(`${API_URL}/tasks`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('_authToken')}`
+    }
+  })
   if (!response.ok) {
     throw new Error(response.statusText)
   }
@@ -10,7 +16,13 @@ async function fetchAllTasks () {
 }
 
 async function fetchTask (id) {
-  const response = await fetch(`${API_URL}/tasks/${id}`)
+  const response = await fetch(`${API_URL}/tasks/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('_authToken')}`
+    }
+  })
   if (!response.ok) {
     throw new Error(response.statusText)
   }
@@ -23,6 +35,7 @@ async function createTask (data) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('_authToken')}`
     },
     body: JSON.stringify(data)
   })
@@ -39,6 +52,7 @@ async function updateTask (id, data) {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('_authToken')}`
     },
     body: JSON.stringify({
       title:       data.title,
@@ -58,7 +72,11 @@ async function updateTask (id, data) {
 
 async function deleteTask (id) {
   const response = await fetch(`${API_URL}/tasks/${id}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('_authToken')}`
+    }
   })
 
   if (!response.ok) {
@@ -73,7 +91,13 @@ async function deleteTask (id) {
 }
 
 async function searchTasks (query) {
-  const response = await fetch(`${API_URL}/search/tasks/?q=${query}`)
+  const response = await fetch(`${API_URL}/search/tasks/?q=${query}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('_authToken')}`
+    }
+  })
   if (!response.ok) {
     throw new Error(response.statusText)
   }

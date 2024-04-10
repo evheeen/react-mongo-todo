@@ -31,6 +31,7 @@ function SignUp () {
     
     if (response.status.code == 200) {
       setAuth({ email: response.data.email, accessToken: response.data.accessToken })
+      localStorage.setItem('_authToken', response.data.access_token)
       navigate('/')
       setEmail('')
       setPassword('')
