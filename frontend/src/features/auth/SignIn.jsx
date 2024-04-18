@@ -23,7 +23,6 @@ function SignIn () {
     }
 
     const response = await authenticate(accountData)
-    console.log(response)
 
     if (response.status.code == 200) {
       setAuth({ email: response.data.email, accessToken: response.data.access_token })

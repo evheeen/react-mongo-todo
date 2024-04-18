@@ -30,8 +30,4 @@ class Account
   def self.primary_key
     '_id'
   end
-
-  def self.revoke_jwt(_payload, account)
-    account.update_attribute(:jti, generate_jti)
-  end
 end
