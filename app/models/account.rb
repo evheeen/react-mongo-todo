@@ -1,7 +1,7 @@
 class Account
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Devise::JWT::RevocationStrategies::JTIMatcher
+  include Devise::JWT::RevocationStrategies::Allowlist
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :jwt_authenticatable,
@@ -12,9 +12,6 @@ class Account
   field :reset_password_token,   type: String
   field :reset_password_sent_at, type: Time
   field :remember_created_at,    type: Time
-
-  field :jti, type: String
-  index({ jti: 1 }, { unique: true })
 
   field :username, type: String
 
