@@ -1,6 +1,7 @@
 module Api
   module V1
     class TasksController < ApplicationController
+      before_action :authenticate_account!
       before_action :set_task, only: %i[show update destroy]
 
       # GET /api/v1/tasks

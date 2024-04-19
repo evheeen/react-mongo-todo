@@ -276,7 +276,12 @@ Devise.setup do |config|
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
-  #
+
+  # Disables cookies on Sign Up
+  config.warden do |warden|
+    warden.scope_defaults :account, store: false
+  end
+
   # config.warden do |manager|
   #   manager.intercept_401 = false
   #   manager.default_strategies(scope: :user).unshift :some_external_strategy
@@ -315,6 +320,6 @@ Devise.setup do |config|
     jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
     jwt.dispatch_requests = [['POST', %r{^/sign_in$}]]
     jwt.revocation_requests = [['DELETE', %r{^/sign_out$}]]
-    jwt.expiration_time = 7.days.to_i
+    jwt.expiration_time = 3.days.to_i
   end
 end
