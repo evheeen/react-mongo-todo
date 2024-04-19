@@ -1,4 +1,4 @@
-class AllowlistedJwt < ApplicationRecord
+class AllowlistedJwt
   include Mongoid::Document
   include Mongoid::Timestamps
 
