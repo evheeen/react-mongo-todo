@@ -15,7 +15,6 @@ function SignOut () {
     }
 
     const response = await logout()
-    console.log(response)
 
     if (response.status.code === 200) {
       localStorage.removeItem('_authToken')

@@ -11,7 +11,7 @@ async function registrate (data) {
     })
 
     if (response.ok) {
-      return response.json()
+      return { response: await response.json(), headers: response.headers }
     } else {
       throw new Error(response)
     }
@@ -31,7 +31,7 @@ async function authenticate (data) {
     })
 
     if (response.ok) {
-      return response.json()
+      return { response: await response.json(), headers: response.headers }
     } else {
       throw new Error(response)
     }
