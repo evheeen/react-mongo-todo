@@ -22,11 +22,11 @@ function SignIn () {
       }
     }
 
-    const response = await authenticate(accountData)
+    const { response, headers } = await authenticate(accountData)
 
-    if (response.status.code == 200) {
-      setAuth({ email: response.data.email, accessToken: response.data.access_token })
-      localStorage.setItem('_authToken', response.data.access_token)
+    if (response.status.code === 200) {
+      setAuth({ email: response.data.email, accessToken: headers.get('Authorization').split(' ')[1] })
+      localStorage.setItem('_authToken', headers.get('Authorization').split(' ')[1])
       navigate('/')
       setEmail('')
       setPassword('')

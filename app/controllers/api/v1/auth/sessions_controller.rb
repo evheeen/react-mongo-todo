@@ -23,9 +23,9 @@ module Api
 
           def respond_to_on_destroy
             if current_account
-              render json: { status: 401, message: "Couldn't find an active session." }, status: :unauthorized
+              render json: { status: { code: 401, message: "Couldn't find an active session." } }, status: :unauthorized
             else
-              render json: { status: 200, message: 'Logged out successfully' }, status: :ok
+              render json: { status: { code: 200, message: 'Logged out successfully' } }, status: :ok
             end
           end
       end

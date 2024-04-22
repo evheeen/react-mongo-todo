@@ -26,12 +26,11 @@ function SignUp () {
       }
     }
 
-    const response = await registrate(accountData)
-    console.log(response)
+    const { response, headers } = await registrate(accountData)
     
-    if (response.status.code == 200) {
-      setAuth({ email: response.data.email, accessToken: response.data.accessToken })
-      localStorage.setItem('_authToken', response.data.access_token)
+    if (response.status.code === 200) {
+      setAuth({ email: response.data.email, accessToken: headers.get('Authorization').split(' ')[1] })
+      localStorage.setItem('_authToken', headers.get('Authorization').split(' ')[1])
       navigate('/')
       setEmail('')
       setPassword('')
