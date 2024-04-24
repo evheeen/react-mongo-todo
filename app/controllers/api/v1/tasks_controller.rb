@@ -1,12 +1,11 @@
 module Api
   module V1
     class TasksController < ApplicationController
-      before_action :authenticate_account!
       before_action :set_task, only: %i[show update destroy]
 
       # GET /api/v1/tasks
       def index
-        @tasks = Task.all
+        @tasks = current_account.tasks
         render json: @tasks
       end
 
@@ -17,7 +16,7 @@ module Api
 
       # POST /tasks
       def create
-        @task = Task.new(task_params)
+        @task = current_account.tasks.new(task_params)
 
         if @task.save
           render json: @task, status: :created, location: api_v1_tasks_url(@task)
@@ -43,7 +42,7 @@ module Api
       private
 
         def set_task
-          @task = Task.find(params[:id])
+          @task = current_account.tasks.find(params[:id])
         end
 
         def task_params
