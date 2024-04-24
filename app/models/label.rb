@@ -3,7 +3,7 @@ class Label
 
   field :name, type: String
 
-  # belongs_to :account
+  belongs_to :account
 
   has_and_belongs_to_many :tasks
 

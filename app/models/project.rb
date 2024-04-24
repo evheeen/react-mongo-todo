@@ -6,7 +6,7 @@ class Project
   field :description, type: String
   field :deadline, type: DateTime
 
-  # belongs_to :account
+  belongs_to :account
   has_many :tasks
 
   validates :name,        presence: true, length: { maximum: 90 }
