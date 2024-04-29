@@ -1,16 +1,18 @@
 import { useState, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import { authenticate } from '../../services/accountService'
 
-import AuthContext from '../../context/AuthProvider'
+import useAuth from '../../hooks/useAuth'
 
 function SignIn () {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const navigate = useNavigate()
-  const { setAuth } = useContext(AuthContext)
+  const location = useLocation()
+  const previousPage = location.state?.from?.pathname || '/'
+  const { setAuth } = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -27,9 +29,9 @@ function SignIn () {
     if (response.status.code === 200) {
       setAuth({ email: response.data.email, accessToken: headers.get('Authorization').split(' ')[1] })
       localStorage.setItem('_authToken', headers.get('Authorization').split(' ')[1])
-      navigate('/')
       setEmail('')
       setPassword('')
+      navigate(previousPage, { replace: true })
     }
   }
 

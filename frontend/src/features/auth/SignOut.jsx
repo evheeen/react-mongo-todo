@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom'
 
 import { logout } from '../../services/accountService'
 
-import AuthContext from '../../context/AuthProvider'
+import useAuth from '../../hooks/useAuth'
 
 function SignOut () {
   const navigate = useNavigate()
-  const { setAuth } = useContext(AuthContext)
+  const { setAuth } = useAuth()
 
   const handleLogout = async () => {
     if (!localStorage.getItem('_authToken')) {

@@ -1,9 +1,9 @@
 import { useState, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import { registrate } from '../../services/accountService'
 
-import AuthContext from '../../context/AuthProvider'
+import useAuth from '../../hooks/useAuth'
 
 function SignUp () {
   const [email, setEmail] = useState('')
@@ -12,7 +12,9 @@ function SignUp () {
   const [username, setUsername] = useState('')
 
   const navigate = useNavigate()
-  const { setAuth } = useContext(AuthContext)
+  const location = useLocation()
+  const previousPage = location.state?.from?.pathname || '/'
+  const { setAuth } = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -31,11 +33,11 @@ function SignUp () {
     if (response.status.code === 200) {
       setAuth({ email: response.data.email, accessToken: headers.get('Authorization').split(' ')[1] })
       localStorage.setItem('_authToken', headers.get('Authorization').split(' ')[1])
-      navigate('/')
       setEmail('')
       setPassword('')
       setPasswordConfirmation('')
       setUsername('')
+      navigate(previousPage, { replace: true })
     }
   }
 
