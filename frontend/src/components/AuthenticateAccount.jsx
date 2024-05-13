@@ -6,9 +6,9 @@ const AuthenticateAccount = () => {
   const location = useLocation()
 
   return (
-    auth?.email
+    auth?.accessToken
       ? <Outlet />
-      : <Navigate to="/sign_in" state={{ from: location }} replace />
+      : <Navigate to='/sign_in' state={{ from: location }} replace />
   )
 }
 

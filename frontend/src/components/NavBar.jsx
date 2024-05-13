@@ -11,7 +11,7 @@ function NavBar () {
       <Link to='tasks/new'>New</Link>
       {' | '}
       {
-        auth?.email
+        auth?.accessToken
           ? <Link to='/sign_out'>Sign Out</Link>
           : <><Link to='/sign_in'>Sign In</Link> | <Link to='/sign_up'>Sign Up</Link></>
       }
