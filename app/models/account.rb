@@ -1,6 +1,7 @@
 class Account
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Errors
   include Devise::JWT::RevocationStrategies::Allowlist
 
   devise :database_authenticatable, :registerable,

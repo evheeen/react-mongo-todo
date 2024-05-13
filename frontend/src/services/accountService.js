@@ -60,4 +60,25 @@ async function logout () {
   }
 }
 
-export { registrate, authenticate, logout }
+async function validateToken () {
+  try {
+    const response = await fetch(`${API_URL}/validate_token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('_authToken')}`
+      }
+    })
+
+    if (response.ok) {
+      return true
+    } else {
+      return false
+    }
+  } catch (error) {
+    console.error('Token Validation Error:', error)
+    throw error
+  }
+}
+
+export { registrate, authenticate, logout, validateToken }
