@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 
 import AuthenticateAccount from './AuthenticateAccount'
+import ProtectedRoute      from './ProtectedRoute'
 
 import TasksIndex from '../features/tasks/TasksIndex'
 import TaskShow   from '../features/tasks/TaskShow'
@@ -20,14 +21,14 @@ function AppRoutes () {
         <Route path='/tasks/:id' element={<TaskShow />} />
         <Route path='/tasks/:id/edit' element={<TaskEdit />} />
         <Route path='/tasks/new' element={<TaskNew />} />
-      </Route>
 
-      <Route path='/sign_in' element={<SignIn />} />
-      <Route path='/sign_up' element={<SignUp />} />
-      <Route element={<AuthenticateAccount />}>
         <Route path='/sign_out' element={<SignOut />} />
       </Route>
 
+      <Route element={<ProtectedRoute />}>
+        <Route path='/sign_in' element={<SignIn />} />
+        <Route path='/sign_up' element={<SignUp />} />
+      </Route>
       <Route path='*' element={<p>There&apos;s nothing here: 404!</p>} />
     </Routes>
   )
