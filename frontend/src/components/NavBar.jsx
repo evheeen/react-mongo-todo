@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom'
+
 import useAuth from '../hooks/useAuth'
+
+import SignOut from '../features/auth/SignOut'
 
 function NavBar () {
   const { auth } = useAuth()
@@ -12,7 +15,7 @@ function NavBar () {
       {' | '}
       {
         auth?.accessToken
-          ? <Link to='/sign_out'>Sign Out</Link>
+          ? <SignOut />
           : <><Link to='/sign_in'>Sign In</Link> | <Link to='/sign_up'>Sign Up</Link></>
       }
     </nav>

@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 import { logout } from '../../services/accountService'
 
@@ -24,7 +24,7 @@ function SignOut () {
   }
 
   return (
-    <button onClick={handleLogout}>Sign Out</button>
+    <Link onClick={handleLogout}>Sign Out</Link>
   )
 }
 

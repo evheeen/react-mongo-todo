@@ -10,7 +10,6 @@ import TaskEdit   from '../features/tasks/TaskEdit'
 
 import SignIn  from '../features/auth/SignIn'
 import SignUp  from '../features/auth/SignUp'
-import SignOut from '../features/auth/SignOut'
 
 function AppRoutes () {
   return (
@@ -21,14 +20,13 @@ function AppRoutes () {
         <Route path='/tasks/:id' element={<TaskShow />} />
         <Route path='/tasks/:id/edit' element={<TaskEdit />} />
         <Route path='/tasks/new' element={<TaskNew />} />
-
-        <Route path='/sign_out' element={<SignOut />} />
       </Route>
 
       <Route element={<ProtectedRoute />}>
         <Route path='/sign_in' element={<SignIn />} />
         <Route path='/sign_up' element={<SignUp />} />
       </Route>
+
       <Route path='*' element={<p>There&apos;s nothing here: 404!</p>} />
     </Routes>
   )
