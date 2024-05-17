@@ -5,6 +5,9 @@ import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './context/AuthProvider'
 
 import App from './App.jsx'
+
+import '@tabler/core/dist/css/tabler.min.css'
+
 import './index.css'
 import './styles/modern_normalize.css'
 

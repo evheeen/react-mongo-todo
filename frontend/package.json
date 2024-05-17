@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tabler/core": "^1.0.0-beta20",
     "dotenv": "^16.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
