@@ -36,32 +36,47 @@ function SignIn () {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="emailInput">Email:</label>
-        <input
-          id="emailInput"
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+    <div className="container container-tight py-4">
+      <div className="card card-md">
+        <div className="card-body">
+          <h2 className="h2 text-center mb-4">Login to your account</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label className="form-label" htmlFor="emailInput">Email address</label>
+              <input
+                id="emailInput"
+                className="form-control"
+                type="text"
+                placeholder="your@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-2">
+              <label className="form-label" htmlFor="passwordInput">Password</label>
+              <input
+                id="passwordInput"
+                className="form-control"
+                type="password"
+                placeholder="Your password"
+                value={password}
+                autoComplete="off"
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-footer">
+              <button type="submit" className="btn btn-primary w-100">Sign In</button>
+            </div>
+          </form>
+        </div>
       </div>
-      <div>
-        <label htmlFor="passwordInput">Password:</label>
-        <input
-          id="passwordInput"
-          type="password"
-          value={password}
-          autoComplete="off"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+
+      <div className="text-center text-secondary mt-3">
+        Don't have account yet? <a href="/sign_up" tabIndex="-1">Sign up</a>
       </div>
-      <div>
-        <button type="submit">Sign In</button>
-      </div>
-    </form>
+    </div>
   )
 }
 
