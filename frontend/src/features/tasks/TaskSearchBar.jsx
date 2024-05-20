@@ -20,7 +20,7 @@ function TaskSearchBar({ value, onChange, onImmediateChange }) {
 
   return (
     <div>
-      <input type='text' placeholder='Search...' value={value} onChange={handleSearchChange} />
+      <input type='text' placeholder='Search...' value={value} onChange={handleSearchChange} className="form-control" />
     </div>
   )
 }

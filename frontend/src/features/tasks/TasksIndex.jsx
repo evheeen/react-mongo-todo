@@ -30,36 +30,61 @@ function TasksIndex () {
   if (loading) return <div>Loading...</div>
 
   return (
-    <div>
-      <TaskSearchBar value={searchTerm} onChange={handleDebouncedSearchChange} onImmediateChange={handleImmediateSearchChange}/>
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Due Date</th>
-            <th>Status</th>
-            <th>Priority</th>
-            <th>Project</th>
-            <th>Labels</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tasks.map((task) => (
-            <tr key={task._id.$oid}>
-              <td>{task.title}</td>
-              <td>{task.description}</td>
-              <td>{task.due_date}</td>
-              <td>{task.status}</td>
-              <td>{task.priority}</td>
-              <td></td>
-              <td></td>
-              <td><Link to={`/tasks/${task._id.$oid}`}>Show</Link></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="page-wrapper">
+      <div className="page-header d-print-none">
+        <div className="container-xl">
+          <div className="row g-2 align-items-center">
+            <div className="col">
+              <h2 className="page-title">
+                Todos
+              </h2>
+            </div>
+            <div className="col-auto ms-auto d-print-none">
+              <TaskSearchBar value={searchTerm} onChange={handleDebouncedSearchChange} onImmediateChange={handleImmediateSearchChange}/>
+            </div>
+            <div className="col-auto ms-auto d-print-none">
+              <Link to='tasks/new' className="btn btn-primary">Add task</Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="page-body">
+        <div className="container-xl">
+          <div className="card">
+            <div className="table-responsive">
+              <table className="table table-vcenter card-table">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Project</th>
+                    <th>Labels</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tasks.map((task) => (
+                    <tr key={task._id.$oid}>
+                      <td>{task.title}</td>
+                      <td className="text-secondary">{task.description}</td>
+                      <td className="text-secondary">{task.due_date}</td>
+                      <td className="text-secondary">{task.status}</td>
+                      <td className="text-secondary">{task.priority}</td>
+                      <td className="text-secondary"></td>
+                      <td className="text-secondary"></td>
+                      <td><Link to={`/tasks/${task._id.$oid}`}>Show</Link></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
