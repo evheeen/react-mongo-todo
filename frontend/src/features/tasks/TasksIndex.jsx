@@ -5,6 +5,8 @@ import TaskSearchBar from './TaskSearchBar'
 import useTasksData from '../../hooks/useTasksData'
 import useURLSearchParam from '../../hooks/useURLSearchParam'
 
+import PlusIcon from '../../assets/icons/plus'
+
 function TasksIndex () {
   const [tasks, setTasks] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
@@ -36,14 +38,17 @@ function TasksIndex () {
           <div className="row g-2 align-items-center">
             <div className="col">
               <h2 className="page-title">
-                Todos
+                <Link to='/' className="nav-link">Board</Link>
               </h2>
             </div>
             <div className="col-auto ms-auto d-print-none">
               <TaskSearchBar value={searchTerm} onChange={handleDebouncedSearchChange} onImmediateChange={handleImmediateSearchChange}/>
             </div>
             <div className="col-auto ms-auto d-print-none">
-              <Link to='tasks/new' className="btn btn-primary">Add task</Link>
+              <Link to='tasks/new' className="btn btn-primary">
+                <PlusIcon />
+                Add task
+              </Link>
             </div>
           </div>
         </div>

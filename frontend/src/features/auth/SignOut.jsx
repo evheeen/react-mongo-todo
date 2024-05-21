@@ -5,6 +5,8 @@ import { logout } from '../../services/accountService'
 
 import useAuth from '../../hooks/useAuth'
 
+import LogoutIcon from '../../assets/icons/logout'
+
 function SignOut () {
   const navigate = useNavigate()
   const { setAuth } = useAuth()
@@ -24,7 +26,10 @@ function SignOut () {
   }
 
   return (
-    <Link onClick={handleLogout}>Sign Out</Link>
+    <Link onClick={handleLogout} className="btn btn-outline-dark">
+      <LogoutIcon />
+      Logout
+    </Link>
   )
 }
 
