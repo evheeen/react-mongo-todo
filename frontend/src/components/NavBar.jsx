@@ -18,14 +18,14 @@ function NavBar () {
         </h1>
         <div className="navbar-nav flex-row order-md-last">
           <div className="nav-item">
-            <a href="#" className="d-flex lh-1 nav-link p-0">
+            <div className="d-flex lh-1 nav-link p-0">
               {
                 auth?.accessToken
                   ? <>
                       <UserCircleIcon />
                       <div className="d-none d-xl-block ps-2 me-4">
-                        <div>nickname</div>
-                        <div className="mt-1 small text-secondary">email</div>
+                        <div>{auth.username}</div>
+                        <div className="mt-1 small text-secondary">{auth.email}</div>
                       </div>
                       <SignOut />
                     </>
@@ -37,7 +37,7 @@ function NavBar () {
                       <Link to='/sign_up' className="btn">Sign Up</Link>
                     </div>
               }
-            </a>
+            </div>
           </div>
         </div>
       </div>

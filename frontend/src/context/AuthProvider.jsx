@@ -5,7 +5,11 @@ import { validateToken } from '../services/accountService'
 const AuthContext = createContext({ auth: {}, setAuth: () => {} })
 
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState(() => ({ accessToken: localStorage.getItem('_authToken') }) || {})
+  const [auth, setAuth] = useState(() => ({
+      accessToken: localStorage.getItem('_authToken'),
+      email:       localStorage.getItem('_authEmail'),
+      username:    localStorage.getItem('_authUsername') 
+    }) || {})
 
   useEffect(() => {
     const validateAndStoreAuth = async () => {
@@ -16,6 +20,8 @@ export const AuthProvider = ({ children }) => {
           if (!isValid) {
             setAuth({})
             localStorage.removeItem('_authToken')
+            localStorage.removeItem('_authEmail')
+            localStorage.removeItem('_authUsername')
           }
         } catch (error) {
           console.error('Token Validation Error:', error)

@@ -20,6 +20,8 @@ function SignOut () {
 
     if (response.status.code === 200) {
       localStorage.removeItem('_authToken')
+      localStorage.removeItem('_authEmail')
+      localStorage.removeItem('_authUsername')
       setAuth({})
       navigate('/sign_in')
     }

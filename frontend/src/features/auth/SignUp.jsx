@@ -31,8 +31,10 @@ function SignUp () {
     const { response, headers } = await registrate(accountData)
     
     if (response.status.code === 200) {
-      setAuth({ email: response.data.email, accessToken: headers.get('Authorization').split(' ')[1] })
+      setAuth({ email: response.data.email, username: response.data.username, accessToken: headers.get('Authorization').split(' ')[1] })
       localStorage.setItem('_authToken', headers.get('Authorization').split(' ')[1])
+      localStorage.setItem('_authEmail', response.data.email)
+      localStorage.setItem('_authUsername', response.data.username)
       setEmail('')
       setPassword('')
       setPasswordConfirmation('')
