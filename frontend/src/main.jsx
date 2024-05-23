@@ -7,6 +7,7 @@ import { AuthProvider } from './context/AuthProvider'
 import App from './App.jsx'
 
 import '@tabler/core/dist/css/tabler.min.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
 
 import './index.css'
 import './styles/modern_normalize.css'

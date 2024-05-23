@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
 import { fetchTask, updateTask } from '../../services/taskService'
+
 import TaskForm from './TaskForm'
+
+import EditIcon from '../../assets/icons/edit'
 
 function TaskEdit () {
   const [task, setTask] = useState(null)
@@ -40,7 +43,15 @@ function TaskEdit () {
   if (!task) return <div>Task not found</div>
 
   return (
-    <TaskForm task={task} action='edit' onSubmit={handleSubmit} />
+    <>
+      <a href="#" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-task">
+        <EditIcon />
+        Edit task
+      </a>
+      <div className="modal modal-blur fade" id="modal-task" tabIndex="-1" aria-hidden="true">
+        <TaskForm task={task} action='edit' onSubmit={handleSubmit} />
+      </div>
+    </>
   )
 }
 

@@ -1,11 +1,11 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
+import TaskNew       from './TaskNew'
 import TaskSearchBar from './TaskSearchBar'
-import useTasksData from '../../hooks/useTasksData'
-import useURLSearchParam from '../../hooks/useURLSearchParam'
 
-import PlusIcon from '../../assets/icons/plus'
+import useTasksData      from '../../hooks/useTasksData'
+import useURLSearchParam from '../../hooks/useURLSearchParam'
 
 function TasksIndex () {
   const [tasks, setTasks] = useState([])
@@ -45,10 +45,7 @@ function TasksIndex () {
               <TaskSearchBar value={searchTerm} onChange={handleDebouncedSearchChange} onImmediateChange={handleImmediateSearchChange}/>
             </div>
             <div className="col-auto ms-auto d-print-none">
-              <Link to='tasks/new' className="btn btn-primary">
-                <PlusIcon />
-                Add task
-              </Link>
+              <TaskNew />
             </div>
           </div>
         </div>

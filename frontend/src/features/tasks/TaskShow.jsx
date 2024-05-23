@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import { fetchTask, deleteTask } from '../../services/taskService'
+
+import TaskEdit from './TaskEdit'
 
 function TaskShow () {
   const [task, setTask] = useState(null)
@@ -61,7 +63,7 @@ function TaskShow () {
           <td></td>
           <td></td>
           <td>
-            <Link to={`/tasks/${task._id.$oid}/edit`}>Edit</Link>
+            <TaskEdit />
             {' | '}
             <button onClick={deleteTaskHandler}>Delete</button>
           </td>
