@@ -7,9 +7,10 @@ import { fetchTask, deleteTask } from '../../services/taskService'
 
 import TaskEdit from './TaskEdit'
 
-function TaskShow ({ id }) {
+function TaskShow({ id }) {
   const [task, setTask] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [showModal, setShowModal] = useState(false)
 
   const navigate = useNavigate()
 
@@ -37,22 +38,24 @@ function TaskShow ({ id }) {
     }
   }
 
+  const handleOpenModal = () => setShowModal(true)
+  const handleCloseModal = () => setShowModal(false)
+
   if (loading) return <div>Loading...</div>
   if (!task) return <div>Task not found</div>
 
   return (
     <>
-      <a className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#task-show-${task._id.$oid}`}>
+      <a className="btn btn-primary" onClick={handleOpenModal}>
         Show
       </a>
-      <div className="modal modal-blur fade" id={`#task-show-${task._id.$oid}`} tabIndex="-1" aria-hidden="true">
-        <div className="modal-dialog modal-xl modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">{`Task - ${task.title}`}</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
+      <Modal show={showModal} onHide={handleCloseModal} size="xl" centered>
+        {task && (
+          <>
+            <Modal.Header closeButton>
+              <Modal.Title>{`Task - ${task.title}`}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
               <div className="table-responsive">
                 <table className="table table-vcenter card-table">
                   <thead>
@@ -77,21 +80,22 @@ function TaskShow ({ id }) {
                       <td className="text-secondary"></td>
                       <td className="text-secondary"></td>
                       <td className="btn-group">
-                        {/*<TaskEdit id={task._id.$oid} />*/}
-                        <button onClick={deleteTaskHandler} className="btn">Delete</button>
+                        <TaskEdit id={task._id.$oid} />
+                        <button onClick={deleteTaskHandler} className="btn">
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            </Modal.Body>
+          </>
+        )}
+      </Modal>
     </>
   )
 }
-
 
 TaskShow.propTypes = {
   id: PropTypes.string.isRequired,
