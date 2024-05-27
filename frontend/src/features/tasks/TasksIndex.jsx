@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
+import TaskShow      from './TaskShow'
 import TaskNew       from './TaskNew'
 import TaskSearchBar from './TaskSearchBar'
 
@@ -78,7 +79,7 @@ function TasksIndex () {
                       <td className="text-secondary">{task.priority}</td>
                       <td className="text-secondary"></td>
                       <td className="text-secondary"></td>
-                      <td><Link to={`/tasks/${task._id.$oid}`}>Show</Link></td>
+                      <td><TaskShow id={task._id.$oid} /></td>
                     </tr>
                   ))}
                 </tbody>

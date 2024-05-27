@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import { fetchTask, updateTask } from '../../services/taskService'
 
@@ -7,11 +8,9 @@ import TaskForm from './TaskForm'
 
 import EditIcon from '../../assets/icons/edit'
 
-function TaskEdit () {
+function TaskEdit ({ id }) {
   const [task, setTask] = useState(null)
   const [loading, setLoading] = useState(true)
-
-  const { id } = useParams()
 
   const navigate = useNavigate()
 
@@ -44,7 +43,7 @@ function TaskEdit () {
 
   return (
     <>
-      <a href="#" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-task">
+      <a className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-task">
         <EditIcon />
         Edit task
       </a>
@@ -53,6 +52,10 @@ function TaskEdit () {
       </div>
     </>
   )
+}
+
+TaskEdit.propTypes = {
+  id: PropTypes.string.isRequired,
 }
 
 export default TaskEdit

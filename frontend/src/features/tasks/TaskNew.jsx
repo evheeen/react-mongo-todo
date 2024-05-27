@@ -19,7 +19,7 @@ function TaskNew () {
 
   return (
     <>
-      <a href="#" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-task">
+      <a className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-task">
         <PlusIcon />
         Add task
       </a>

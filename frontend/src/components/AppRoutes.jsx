@@ -4,7 +4,6 @@ import AuthenticateAccount from './AuthenticateAccount'
 import ProtectedRoute      from './ProtectedRoute'
 
 import TasksIndex from '../features/tasks/TasksIndex'
-import TaskShow   from '../features/tasks/TaskShow'
 
 import SignIn  from '../features/auth/SignIn'
 import SignUp  from '../features/auth/SignUp'
@@ -15,7 +14,6 @@ function AppRoutes () {
       <Route element={<AuthenticateAccount />}>
         <Route path='/' element={<TasksIndex />} />
         <Route path='/tasks' element={<TasksIndex />} />
-        <Route path='/tasks/:id' element={<TaskShow />} />
       </Route>
 
       <Route element={<ProtectedRoute />}>
