@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { createTask } from '../../services/taskService'
@@ -6,7 +7,12 @@ import TaskForm from './TaskForm'
 import PlusIcon from '../../assets/icons/plus'
 
 function TaskNew () {
+  const [showModal, setShowModal] = useState(false)
+
   const navigate = useNavigate()
+
+  const handleOpenModal = () => setShowModal(true)
+  const handleCloseModal = () => setShowModal(false)
 
   const handleSubmit = async (formData) => {
     try {
@@ -19,13 +25,11 @@ function TaskNew () {
 
   return (
     <>
-      <a className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-task">
+      <a className="btn btn-primary" onClick={handleOpenModal}>
         <PlusIcon />
         Add task
       </a>
-      <div className="modal modal-blur fade" id="modal-task" tabIndex="-1" aria-hidden="true">
-        <TaskForm action='new' onSubmit={handleSubmit} />
-      </div>
+      <TaskForm action='new' onSubmit={handleSubmit} show={showModal} onHide={handleCloseModal} />
     </>
   )
 }

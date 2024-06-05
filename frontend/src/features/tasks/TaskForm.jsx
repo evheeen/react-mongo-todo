@@ -1,34 +1,45 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import Modal from 'react-bootstrap/Modal'
 
 import PlusIcon from '../../assets/icons/plus'
 
-function TaskForm ({ task, action, onSubmit }) {
-  const [formData, setFormData] = useState(
-    task || {
-      title: '',
-      description: '',
-      due_date: '',
-      status: 'pending',
-      priority: 'medium',
-      project_id: ''
-    }
-  )
+function TaskForm ({ task, action, onSubmit, show, onHide }) {
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    due_date: '',
+    status: 'pending',
+    priority: 'medium',
+    project_id: ''
+  })
 
   const statuses = ['pending', 'in_progress', 'completed', 'cancelled']
   const priorities = ['lowest', 'low', 'medium', 'high', 'highest']
 
+  useEffect(() => {
+    if (task) {
+      setFormData({
+        title:       task.title       || '',
+        description: task.description || '',
+        due_date:    task.due_date    || '',
+        status:      task.status      || 'pending',
+        priority:    task.priority    || 'medium',
+        project_id:  task.project_id  || ''
+      })
+    }
+  }, [task])
+
   return (
-    <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div className="modal-content">
-        <div className="modal-header">
+    <Modal show={show} onHide={onHide} size="lg" centered>
+      <form onSubmit={(e) => {
+        e.preventDefault()
+        onSubmit(formData)
+      }}>
+        <Modal.Header closeButton>
           <h5 className="modal-title">{action === 'new' ? 'New task' : 'Edit task'}</h5>
-          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form onSubmit={(e) => {
-          e.preventDefault()
-          onSubmit(formData)
-        }}>
+        </Modal.Header>
+        <Modal.Body>
           <div className="modal-body">
             <div className="mb-3">
               <label htmlFor="titleInput" className="form-label">Title</label>
@@ -64,7 +75,6 @@ function TaskForm ({ task, action, onSubmit }) {
                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                     className="form-select"
                   >
-                    <option value="">Select Status</option>
                     {statuses.map((statusOption, index) => (
                       <option key={index} value={statusOption}>{statusOption.replace(/_/g, ' ')}</option>
                     ))}
@@ -80,7 +90,6 @@ function TaskForm ({ task, action, onSubmit }) {
                     onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
                     className="form-select"
                   >
-                    <option value="">Select Priority</option>
                     {priorities.map((priorityOption, index) => (
                       <option key={index} value={priorityOption}>{priorityOption.replace(/_/g, ' ')}</option>
                     ))}
@@ -120,16 +129,16 @@ function TaskForm ({ task, action, onSubmit }) {
               />
             </div>
           </div>
-          <div className="modal-footer">
-            <a href="#" className="btn btn-link link-secondary" data-bs-dismiss="modal">Cancel</a>
-            <button type="submit" className="btn btn-primary ms-auto">
-              <PlusIcon />
-              {action === 'new' ? 'Create new task' : 'Update task'}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <a className="btn btn-link link-secondary" onClick={onHide}>Cancel</a>
+          <button type="submit" className="btn btn-primary ms-auto">
+            <PlusIcon />
+            {action === 'new' ? 'Create new task' : 'Update task'}
+          </button>
+        </Modal.Footer>
+      </form>
+    </Modal>
   )
 }
 
@@ -144,6 +153,8 @@ TaskForm.propTypes = {
   }),
   action: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired,
+  onHide: PropTypes.func.isRequired,
 }
 
 TaskForm.defaultProps = {

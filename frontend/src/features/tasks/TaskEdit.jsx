@@ -11,8 +11,12 @@ import EditIcon from '../../assets/icons/edit'
 function TaskEdit ({ id }) {
   const [task, setTask] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [showModal, setShowModal] = useState(false)
 
   const navigate = useNavigate()
+
+  const handleOpenModal = () => setShowModal(true)
+  const handleCloseModal = () => setShowModal(false)
 
   useEffect(() => {
     const loadTask = async () => {
@@ -43,13 +47,11 @@ function TaskEdit ({ id }) {
 
   return (
     <>
-      <a className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-task">
+      <a className="btn btn-primary" onClick={handleOpenModal}>
         <EditIcon />
         Edit task
       </a>
-      <div className="modal modal-blur fade" id="modal-task" tabIndex="-1" aria-hidden="true">
-        <TaskForm task={task} action='edit' onSubmit={handleSubmit} />
-      </div>
+      <TaskForm task={task} action='edit' onSubmit={handleSubmit} show={showModal} onHide={handleCloseModal} />
     </>
   )
 }
