@@ -49,7 +49,6 @@ function TaskForm ({ task, action, onSubmit, show, onHide }) {
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 className="form-control"
-                required
               />
             </div>
             

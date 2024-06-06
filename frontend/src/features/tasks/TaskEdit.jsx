@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { toast } from 'react-toastify'
 
 import { fetchTask, updateTask } from '../../services/taskService'
 
@@ -12,8 +12,6 @@ function TaskEdit ({ id }) {
   const [task, setTask] = useState(null)
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
-
-  const navigate = useNavigate()
 
   const handleOpenModal = () => setShowModal(true)
   const handleCloseModal = () => setShowModal(false)
@@ -34,11 +32,13 @@ function TaskEdit ({ id }) {
   }, [id])
 
   const handleSubmit = async (formData) => {
-    try {
-      await await updateTask(id, formData)
-      navigate(`/tasks/${id}`)
-    } catch (e) {
-      console.log('Task updating error:', e)
+    const response = await updateTask(id, formData)
+
+    if (response.status === 200) {
+      handleCloseModal()
+      toast.success('Task update successfully')
+    } else {
+      toast.error(response.data.message)
     }
   }
 

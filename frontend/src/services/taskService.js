@@ -8,6 +8,7 @@ async function fetchAllTasks () {
       'Authorization': `Bearer ${localStorage.getItem('_authToken')}`
     }
   })
+
   if (!response.ok) {
     throw new Error(response.statusText)
   }
@@ -23,6 +24,7 @@ async function fetchTask (id) {
       'Authorization': `Bearer ${localStorage.getItem('_authToken')}`
     }
   })
+
   if (!response.ok) {
     throw new Error(response.statusText)
   }
@@ -40,11 +42,9 @@ async function createTask (data) {
     body: JSON.stringify(data)
   })
 
-  if (!response.ok) {
-    throw new Error(response.statusText)
-  }
+  const body = await response.json()
 
-  return response.json()
+  return { data: body, status: response.status, statusText: response.statusText }
 }
 
 async function updateTask (id, data) {
@@ -63,11 +63,9 @@ async function updateTask (id, data) {
     })
   })
 
-  if (!response.ok) {
-    throw new Error(response.statusText)
-  }
+  const body = await response.json()
 
-  return response.json()
+  return { data: body, status: response.status, statusText: response.statusText }
 }
 
 async function deleteTask (id) {

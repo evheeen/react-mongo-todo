@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { createTask } from '../../services/taskService'
 import TaskForm from './TaskForm'
@@ -9,17 +9,17 @@ import PlusIcon from '../../assets/icons/plus'
 function TaskNew () {
   const [showModal, setShowModal] = useState(false)
 
-  const navigate = useNavigate()
-
   const handleOpenModal = () => setShowModal(true)
   const handleCloseModal = () => setShowModal(false)
 
   const handleSubmit = async (formData) => {
-    try {
-      const response = await createTask(formData)
-      navigate(`/tasks/${response._id.$oid}`)
-    } catch (e) {
-      console.log('Task creating error:', e)
+    const response = await createTask(formData)
+
+    if (response.status === 201) {
+      handleCloseModal()
+      toast.success('Task created successfully')
+    } else {
+      toast.error(response.data.message)
     }
   }
 
