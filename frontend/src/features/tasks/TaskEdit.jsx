@@ -36,7 +36,7 @@ function TaskEdit ({ id }) {
 
     if (response.status === 200) {
       handleCloseModal()
-      toast.success('Task update successfully')
+      toast.success('Updated')
     } else {
       toast.error(response.data.message)
     }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Modal from 'react-bootstrap/Modal'
+import { toast } from 'react-toastify'
 
 import { fetchTask, deleteTask } from '../../services/taskService'
 
@@ -11,8 +11,6 @@ function TaskShow({ id }) {
   const [task, setTask] = useState(null)
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
-
-  const navigate = useNavigate()
 
   useEffect(() => {
     const loadTask = async () => {
@@ -29,17 +27,19 @@ function TaskShow({ id }) {
     loadTask()
   }, [id])
 
-  const deleteTaskHandler = async () => {
-    try {
-      await deleteTask(id)
-      navigate('/')
-    } catch (e) {
-      console.log('Task deleting error:', e)
-    }
-  }
-
   const handleOpenModal = () => setShowModal(true)
   const handleCloseModal = () => setShowModal(false)
+
+  const deleteTaskHandler = async () => {
+    const response = await deleteTask(id)
+
+    if (response.status === 204) {
+      handleCloseModal()
+      toast.success('Deleted')
+    } else {
+      toast.error('Something went wrong')
+    }
+  }
 
   if (loading) return <div>Loading...</div>
   if (!task) return <div>Task not found</div>

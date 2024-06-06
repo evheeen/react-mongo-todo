@@ -77,15 +77,9 @@ async function deleteTask (id) {
     }
   })
 
-  if (!response.ok) {
-    throw new Error(response.statusText)
-  }
+  console.log(response)
 
-  if (response.status === 204) {
-    return null
-  }
-
-  return response.json()
+  return { status: response.status, statusText: response.statusText }
 }
 
 async function searchTasks (query) {

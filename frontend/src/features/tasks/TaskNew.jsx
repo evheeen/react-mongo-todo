@@ -17,7 +17,7 @@ function TaskNew () {
 
     if (response.status === 201) {
       handleCloseModal()
-      toast.success('Task created successfully')
+      toast.success('Created')
     } else {
       toast.error(response.data.message)
     }
