@@ -4,21 +4,23 @@ import Modal from 'react-bootstrap/Modal'
 
 import PlusIcon from '../../assets/icons/plus'
 
-function TaskForm ({ task, action, onSubmit, show, onHide }) {
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    due_date: '',
-    status: 'pending',
-    priority: 'medium',
-    project_id: ''
-  })
+const initialFormData = {
+  title: '',
+  description: '',
+  due_date: '',
+  status: 'pending',
+  priority: 'medium',
+  project_id: ''
+}
 
-  const statuses = ['pending', 'in_progress', 'completed', 'cancelled']
-  const priorities = ['lowest', 'low', 'medium', 'high', 'highest']
+const statuses = ['pending', 'in_progress', 'completed', 'cancelled']
+const priorities = ['lowest', 'low', 'medium', 'high', 'highest']
+
+function TaskForm ({ task, action, onSubmit, show, onHide }) {
+  const [formData, setFormData] = useState(initialFormData)
 
   useEffect(() => {
-    if (task) {
+    if (task && show) {
       setFormData({
         title:       task.title       || '',
         description: task.description || '',
@@ -27,8 +29,10 @@ function TaskForm ({ task, action, onSubmit, show, onHide }) {
         priority:    task.priority    || 'medium',
         project_id:  task.project_id  || ''
       })
+    } else if (!show) {
+      setFormData(initialFormData)
     }
-  }, [task])
+  }, [task, show])
 
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>

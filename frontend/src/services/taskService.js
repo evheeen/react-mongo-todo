@@ -77,8 +77,6 @@ async function deleteTask (id) {
     }
   })
 
-  console.log(response)
-
   return { status: response.status, statusText: response.statusText }
 }
 
