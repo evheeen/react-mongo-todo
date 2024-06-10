@@ -20,6 +20,7 @@ class Account
   has_many :tasks
   has_many :labels
 
+  validates :password, presence: true, length: { minimum: 3, maximum: 35 }, confirmation: true, if: :password_required?
   validates :email,    presence: true,                                      uniqueness: { case_sensitive: false }
   validates :username, presence: true, length: { minimum: 3, maximum: 15 }, uniqueness: { case_sensitive: false }
 
@@ -27,5 +28,9 @@ class Account
 
   def self.primary_key
     '_id'
+  end
+
+  def password_required?
+    new_record? || password.present?
   end
 end

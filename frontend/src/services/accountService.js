@@ -11,7 +11,7 @@ async function registrate (data) {
 
   const body = await response.json()
 
-  return { data: body, status: response.status, statusText: response.statusText, headers: response.headers }
+  return { data: body.data, status: response.status, statusText: response.statusText, headers: response.headers }
 }
 
 async function authenticate (data) {
@@ -25,7 +25,7 @@ async function authenticate (data) {
 
   const body = await response.json()
 
-  return { data: body, status: response.status, statusText: response.statusText, headers: response.headers }
+  return { data: body.data, status: response.status, statusText: response.statusText, headers: response.headers }
 }
 
 async function logout () {
