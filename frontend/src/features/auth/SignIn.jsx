@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { authenticate } from '../../services/accountService'
 
@@ -24,16 +25,19 @@ function SignIn () {
       }
     }
 
-    const { response, headers } = await authenticate(accountData)
+    const response = await authenticate(accountData)
 
-    if (response.status.code === 200) {
-      setAuth({ email: response.data.email, username: response.data.username, accessToken: headers.get('Authorization').split(' ')[1] })
-      localStorage.setItem('_authToken', headers.get('Authorization').split(' ')[1])
+    if (response.status === 200) {
+      setAuth({ email: response.data.email, username: response.data.username, accessToken: response.headers.get('Authorization').split(' ')[1] })
+      localStorage.setItem('_authToken', response.headers.get('Authorization').split(' ')[1])
       localStorage.setItem('_authEmail', response.data.email)
       localStorage.setItem('_authUsername', response.data.username)
       setEmail('')
       setPassword('')
       navigate(previousPage, { replace: true })
+      toast.success(response.data.message)
+    } else {
+      toast.error(response.data.message)
     }
   }
 
@@ -52,7 +56,6 @@ function SignIn () {
                 placeholder="your@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
               />
             </div>
             <div className="mb-2">
@@ -65,7 +68,6 @@ function SignIn () {
                 value={password}
                 autoComplete="off"
                 onChange={(e) => setPassword(e.target.value)}
-                required
               />
             </div>
             <div className="form-footer">

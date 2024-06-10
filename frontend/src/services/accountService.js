@@ -1,43 +1,31 @@
 import { API_URL } from '../constants'
 
 async function registrate (data) {
-  try {
-    const response = await fetch(`${API_URL}/accounts`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data)
-    })
+  const response = await fetch(`${API_URL}/accounts`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  })
 
-    if (response.ok) {
-      return { response: await response.json(), headers: response.headers }
-    } else {
-      throw new Error(response)
-    }
-  } catch (error) {
-    console.error(error)
-  }
+  const body = await response.json()
+
+  return { data: body, status: response.status, statusText: response.statusText, headers: response.headers }
 }
 
 async function authenticate (data) {
-  try {
-    const response = await fetch(`${API_URL}/accounts/sign_in`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data)
-    })
+  const response = await fetch(`${API_URL}/accounts/sign_in`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  })
 
-    if (response.ok) {
-      return { response: await response.json(), headers: response.headers }
-    } else {
-      throw new Error(response)
-    }
-  } catch (error) {
-    console.error(error)
-  }
+  const body = await response.json()
+
+  return { data: body, status: response.status, statusText: response.statusText, headers: response.headers }
 }
 
 async function logout () {
@@ -50,11 +38,9 @@ async function logout () {
       }
     })
 
-    if (response.ok) {
-      return response.json()
-    } else {
-      throw new Error(response)
-    }
+    const body = await response.json()
+
+    return { data: body, status: response.status, statusText: response.statusText }
   } catch (error) {
     console.error(error)
   }

@@ -14,14 +14,12 @@ module Api
 
           def respond_with(resource, _opts = {})
             if resource.persisted?
-              render json: {
-                status: { code: 200, message: 'Signed up sucessfully.' },
-                data: AccountSerializer.new(resource).serializable_hash[:data][:attributes]
-              }
+              render json: { data: AccountSerializer.new(resource).serializable_hash[:data][:attributes],
+                             message: 'Signed up sucessfully.' },
+                     status: :ok
             else
-              render json: {
-                status: { code: 422, message: "Account couldn't be created successfully. #{resource.errors.full_messages.to_sentence}" }
-              }, status: :unprocessable_entity
+              render json: { errors: resource.errors.full_messages, message: resource.errors.full_messages.to_sentence },
+                     status: :unprocessable_entity
             end
           end
       end

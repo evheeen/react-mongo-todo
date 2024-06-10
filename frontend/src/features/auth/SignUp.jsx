@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { registrate } from '../../services/accountService'
 
@@ -28,11 +29,11 @@ function SignUp () {
       }
     }
 
-    const { response, headers } = await registrate(accountData)
-    
-    if (response.status.code === 200) {
-      setAuth({ email: response.data.email, username: response.data.username, accessToken: headers.get('Authorization').split(' ')[1] })
-      localStorage.setItem('_authToken', headers.get('Authorization').split(' ')[1])
+    const response = await registrate(accountData)
+
+    if (response.status === 200) {
+      setAuth({ email: response.data.email, username: response.data.username, accessToken: response.headers.get('Authorization').split(' ')[1] })
+      localStorage.setItem('_authToken', response.headers.get('Authorization').split(' ')[1])
       localStorage.setItem('_authEmail', response.data.email)
       localStorage.setItem('_authUsername', response.data.username)
       setEmail('')
@@ -40,6 +41,9 @@ function SignUp () {
       setPasswordConfirmation('')
       setUsername('')
       navigate(previousPage, { replace: true })
+      toast.success(response.data.message)
+    } else {
+      response.data.errors.forEach(error => toast.error(error))
     }
   }
 
@@ -58,7 +62,6 @@ function SignUp () {
                 placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
               />
             </div>
             <div className="mb-3">
@@ -71,7 +74,6 @@ function SignUp () {
                 value={password}
                 autoComplete="new-password"
                 onChange={(e) => setPassword(e.target.value)}
-                required
               />
             </div>
             <div className="mb-3">
@@ -84,7 +86,6 @@ function SignUp () {
                 value={passwordConfirmation}
                 autoComplete="new-password"
                 onChange={(e) => setPasswordConfirmation(e.target.value)}
-                required
               />
             </div>
             <div className="mb-3">
@@ -97,7 +98,6 @@ function SignUp () {
                 value={username}
                 autoComplete="username"
                 onChange={(e) => setUsername(e.target.value)}
-                required
               />
             </div>
             <div className="form-footer">

@@ -21,7 +21,7 @@ module Api
         if @task.save
           render json: {}, status: :created, location: api_v1_tasks_url(@task)
         else
-          render json: { errors: @task.errors, message: @task.errors.full_messages.to_sentence }, status: :unprocessable_entity
+          render json: { errors: @task.errors.full_messages, message: @task.errors.full_messages.to_sentence }, status: :unprocessable_entity
         end
       end
 
@@ -30,7 +30,7 @@ module Api
         if @task.update(task_params)
           render json: {}, status: :ok
         else
-          render json: { errors: @task.errors, message: @task.errors.full_messages.to_sentence }, status: :unprocessable_entity
+          render json: { errors: @task.errors.full_messages, message: @task.errors.full_messages.to_sentence }, status: :unprocessable_entity
         end
       end
 

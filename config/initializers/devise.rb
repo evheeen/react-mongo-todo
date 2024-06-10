@@ -277,9 +277,14 @@ Devise.setup do |config|
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
 
-  # Disables cookies on Sign Up
-  config.warden do |warden|
-    warden.scope_defaults :account, store: false
+  config.warden do |manager|
+    # Disables cookies on Sign Up
+    manager.scope_defaults :account, store: false
+
+    # Devise Failure App
+    # allows you to handle failures (like invalid login credentials) and return custom JSON responses.
+    manager.intercept_401 = true
+    manager.failure_app = CustomAuthFailure
   end
 
   # config.warden do |manager|

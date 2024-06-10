@@ -15,17 +15,21 @@ module Api
         private
 
           def respond_with(resource, _opts = {})
-            render json: {
-              status: { code: 200, message: 'Logged in successfully' },
-              data: AccountSerializer.new(resource).serializable_hash[:data][:attributes]
-            }
+            if resource.errors.empty?
+              render json: { data: AccountSerializer.new(resource).serializable_hash[:data][:attributes],
+                             message: 'Logged in successfully' },
+                     status: :ok
+            else
+              render json: { errors: resource.errors.full_messages, message: resource.errors.full_messages.to_sentence },
+                     status: :unprocessable_entity
+            end
           end
 
           def respond_to_on_destroy
             if current_account
-              render json: { status: { code: 401, message: "Couldn't find an active session." } }, status: :unauthorized
+              render json: { message: "Couldn't find an active session." }, status: :unauthorized
             else
-              render json: { status: { code: 200, message: 'Logged out successfully' } }, status: :ok
+              render json: { message: 'Logged out successfully' }, status: :ok
             end
           end
       end
