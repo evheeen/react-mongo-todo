@@ -1,12 +1,15 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
-import TaskShow      from './TaskShow'
 import TaskNew       from './TaskNew'
+import TaskEdit      from './TaskEdit'
 import TaskSearchBar from './TaskSearchBar'
 
 import useTasksData      from '../../hooks/useTasksData'
 import useURLSearchParam from '../../hooks/useURLSearchParam'
+
+import { deleteTask } from '../../services/taskService'
 
 function TasksIndex () {
   const [tasks, setTasks] = useState([])
@@ -29,6 +32,17 @@ function TasksIndex () {
       setDebouncedSearchTerm(searchValue)
     }
   }, [setDebouncedSearchTerm])
+
+  const deleteTaskHandler = async (id) => {
+    const response = await deleteTask(id)
+
+    if (response.status === 204) {
+      toast.success('Deleted')
+      setTasks(tasks.filter(task => task._id.$oid !== id))
+    } else {
+      toast.error('Something went wrong')
+    }
+  }
 
   if (loading) return <div>Loading...</div>
 
@@ -79,7 +93,12 @@ function TasksIndex () {
                       <td className="text-secondary">{task.priority}</td>
                       <td className="text-secondary"></td>
                       <td className="text-secondary"></td>
-                      <td><TaskShow id={task._id.$oid} /></td>
+                      <td>
+                        <TaskEdit id={task._id.$oid} />
+                        <button onClick={() => deleteTaskHandler(task._id.$oid)} className="btn ms-2">
+                          Delete
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
