@@ -33,6 +33,14 @@ function TasksIndex () {
     }
   }, [setDebouncedSearchTerm])
 
+  const handleTaskCreated = (newTask) => {
+    setTasks([...tasks, newTask])
+  }
+
+  const handleTaskUpdated = (updatedTask) => {
+    setTasks(tasks.map(task => (task._id.$oid === updatedTask._id.$oid ? updatedTask : task)))
+  }
+
   const deleteTaskHandler = async (id) => {
     const response = await deleteTask(id)
 
@@ -60,7 +68,7 @@ function TasksIndex () {
               <TaskSearchBar value={searchTerm} onChange={handleDebouncedSearchChange} onImmediateChange={handleImmediateSearchChange}/>
             </div>
             <div className="col-auto ms-auto d-print-none">
-              <TaskNew />
+              <TaskNew onCreate={handleTaskCreated} />
             </div>
           </div>
         </div>
@@ -94,7 +102,7 @@ function TasksIndex () {
                       <td className="text-secondary"></td>
                       <td className="text-secondary"></td>
                       <td>
-                        <TaskEdit id={task._id.$oid} />
+                        <TaskEdit id={task._id.$oid} onUpdate={handleTaskUpdated} />
                         <button onClick={() => deleteTaskHandler(task._id.$oid)} className="btn ms-2">
                           Delete
                         </button>

@@ -8,7 +8,7 @@ import TaskForm from './TaskForm'
 
 import EditIcon from '../../assets/icons/edit'
 
-function TaskEdit ({ id }) {
+function TaskEdit ({ id, onUpdate }) {
   const [task, setTask] = useState(null)
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
@@ -36,6 +36,8 @@ function TaskEdit ({ id }) {
 
     if (response.status === 200) {
       handleCloseModal()
+      setTask(response.data)
+      onUpdate(response.data)
       toast.success('Updated')
     } else {
       toast.error(response.data.message)
@@ -51,13 +53,16 @@ function TaskEdit ({ id }) {
         <EditIcon />
         Edit task
       </a>
-      <TaskForm task={task} action='edit' onSubmit={handleSubmit} show={showModal} onHide={handleCloseModal} />
+      {showModal && (
+        <TaskForm task={task} action='edit' onSubmit={handleSubmit} show={showModal} onHide={handleCloseModal} />
+      )}
     </>
   )
 }
 
 TaskEdit.propTypes = {
   id: PropTypes.string.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 }
 
 export default TaskEdit

@@ -19,7 +19,7 @@ module Api
         @task = current_account.tasks.new(task_params)
 
         if @task.save
-          render json: {}, status: :created, location: api_v1_tasks_url(@task)
+          render json: @task, status: :created, location: api_v1_tasks_url(@task)
         else
           render json: { errors: @task.errors.full_messages, message: @task.errors.full_messages.to_sentence }, status: :unprocessable_entity
         end
@@ -28,7 +28,7 @@ module Api
       # PATCH/PUT /tasks/1
       def update
         if @task.update(task_params)
-          render json: {}, status: :ok
+          render json: @task, status: :ok
         else
           render json: { errors: @task.errors.full_messages, message: @task.errors.full_messages.to_sentence }, status: :unprocessable_entity
         end

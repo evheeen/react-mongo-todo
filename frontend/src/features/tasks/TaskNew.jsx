@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 import { toast } from 'react-toastify'
 
 import { createTask } from '../../services/taskService'
@@ -6,7 +7,7 @@ import TaskForm from './TaskForm'
 
 import PlusIcon from '../../assets/icons/plus'
 
-function TaskNew () {
+function TaskNew ({ onCreate }) {
   const [showModal, setShowModal] = useState(false)
 
   const handleOpenModal = () => setShowModal(true)
@@ -17,6 +18,7 @@ function TaskNew () {
 
     if (response.status === 201) {
       handleCloseModal()
+      onCreate(response.data)
       toast.success('Created')
     } else {
       toast.error(response.data.message)
@@ -32,6 +34,10 @@ function TaskNew () {
       <TaskForm action='new' onSubmit={handleSubmit} show={showModal} onHide={handleCloseModal} />
     </>
   )
+}
+
+TaskNew.propTypes = {
+  onCreate: PropTypes.func.isRequired,
 }
 
 export default TaskNew
