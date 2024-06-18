@@ -10,8 +10,9 @@ async function registrate (data) {
   })
 
   const body = await response.json()
+  const bodyData = response.status === 200 ? body.data : body
 
-  return { data: body.data, status: response.status, statusText: response.statusText, headers: response.headers }
+  return { data: bodyData, status: response.status, statusText: response.statusText, headers: response.headers }
 }
 
 async function authenticate (data) {
@@ -24,8 +25,9 @@ async function authenticate (data) {
   })
 
   const body = await response.json()
+  const bodyData = response.status === 200 ? body.data : body
 
-  return { data: body.data, status: response.status, statusText: response.statusText, headers: response.headers }
+  return { data: bodyData, status: response.status, statusText: response.statusText, headers: response.headers }
 }
 
 async function logout () {
