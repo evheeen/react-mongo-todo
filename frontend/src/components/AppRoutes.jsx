@@ -8,6 +8,8 @@ import TasksIndex from '../features/tasks/TasksIndex'
 import SignIn  from '../features/auth/SignIn'
 import SignUp  from '../features/auth/SignUp'
 
+import PageNotFound  from '../features/layouts/PageNotFound'
+
 function AppRoutes () {
   return (
     <Routes>
@@ -21,7 +23,7 @@ function AppRoutes () {
         <Route path='/sign_up' element={<SignUp />} />
       </Route>
 
-      <Route path='*' element={<p>There&apos;s nothing here: 404!</p>} />
+      <Route path='*' element={<PageNotFound />} />
     </Routes>
   )
 }
