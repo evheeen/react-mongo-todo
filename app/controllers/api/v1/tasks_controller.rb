@@ -6,35 +6,35 @@ module Api
       # GET /api/v1/tasks
       def index
         @tasks = current_account.tasks
-        render json: @tasks, include: [:labels, :project, :notes]
+        render json: @tasks, include: %i[labels project notes]
       end
 
-      # GET /tasks/1
+      # GET /api/v1/tasks/1
       def show
-        render json: @task, include: [:labels, :project, :notes]
+        render json: @task, include: %i[labels project notes]
       end
 
-      # POST /tasks
+      # POST /api/v1/tasks
       def create
         @task = current_account.tasks.new(task_params)
 
         if @task.save
-          render json: @task, include: [:labels, :project, :notes], status: :created, location: api_v1_tasks_url(@task)
+          render json: @task, include: %i[labels project notes], status: :created, location: api_v1_tasks_url(@task)
         else
           render json: { errors: @task.errors.full_messages, message: @task.errors.full_messages.to_sentence }, status: :unprocessable_entity
         end
       end
 
-      # PATCH/PUT /tasks/1
+      # PATCH/PUT /api/v1/tasks/1
       def update
         if @task.update(task_params)
-          render json: @task, include: [:labels, :project, :notes], status: :ok
+          render json: @task, include: %i[labels project notes], status: :ok
         else
           render json: { errors: @task.errors.full_messages, message: @task.errors.full_messages.to_sentence }, status: :unprocessable_entity
         end
       end
 
-      # DELETE /tasks/1
+      # DELETE /api/v1/tasks/1
       def destroy
         @task.destroy
       end
