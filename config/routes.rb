@@ -10,7 +10,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :tasks
+      resources :tasks, except: %i[new edit] do
+        resources :notes, only: %i[create update destroy], module: :tasks
+      end
+      resources :projects, except: %i[new edit]
+      resources :labels,   except: %i[new edit]
 
       get 'search/tasks'
     end
