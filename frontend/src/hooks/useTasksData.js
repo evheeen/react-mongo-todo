@@ -1,11 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { fetchAllTasks, searchTasks } from '../services/taskService'
 
 function useTasksData(searchTerm) {
   const [tasks, setTasks] = useState([])
   const [loading, setLoading] = useState(true)
+  const firstRenderRef = useRef(true)
 
   useEffect(() => {
+    if (firstRenderRef.current && !searchTerm) {
+      firstRenderRef.current = false
+
+      return
+    } 
+
     async function loadTasks() {
       try {
         let data

@@ -58,14 +58,10 @@ async function validateToken () {
       }
     })
 
-    if (response.ok) {
-      return true
-    } else {
-      return false
-    }
+    return response.ok
   } catch (error) {
     console.error('Token Validation Error:', error)
-    throw error
+    return false
   }
 }
 

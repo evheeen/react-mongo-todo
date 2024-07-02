@@ -1,8 +1,7 @@
-import { useContext } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { logout, validateToken } from '../../services/accountService'
+import { logout } from '../../services/accountService'
 
 import useAuth from '../../hooks/useAuth'
 
@@ -14,14 +13,11 @@ function SignOut () {
 
   const handleLogout = async () => {
     if (!localStorage.getItem('_authToken')) {
-      const isTokenValid = await validateToken()
+      localStorage.removeItem('_authEmail')
+      localStorage.removeItem('_authUsername')
 
-      if (!isTokenValid) {
-        localStorage.removeItem('_authToken')
-        localStorage.removeItem('_authEmail')
-        localStorage.removeItem('_authUsername')
-        return setAuth({})
-      }
+      toast.error('You need to sign in or sign up before continuing.')
+      return setAuth({})
     }
 
     const response = await logout()

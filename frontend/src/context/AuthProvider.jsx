@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect, useRef } from 'react'
 
 import { validateToken } from '../services/accountService'
 
@@ -6,13 +6,19 @@ const AuthContext = createContext({ auth: {}, setAuth: () => {} })
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(() => ({
-      accessToken: localStorage.getItem('_authToken'),
-      email:       localStorage.getItem('_authEmail'),
-      username:    localStorage.getItem('_authUsername') 
-    }) || {})
+    accessToken: localStorage.getItem('_authToken'),
+    email:       localStorage.getItem('_authEmail'),
+    username:    localStorage.getItem('_authUsername') 
+  }) || {})
+
+  const hasValidated = useRef(false)
 
   useEffect(() => {
     const validateAndStoreAuth = async () => {
+      if (hasValidated.current) return
+
+      hasValidated.current = true
+
       if (auth.accessToken) {
         try {
           const isValid = await validateToken()

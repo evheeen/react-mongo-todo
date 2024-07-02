@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { toast } from 'react-toastify'
 
@@ -16,7 +16,13 @@ function TaskEdit ({ id, onUpdate }) {
   const handleOpenModal = () => setShowModal(true)
   const handleCloseModal = () => setShowModal(false)
 
+  const firstRenderRef = useRef(false)
+
   useEffect(() => {
+    if (firstRenderRef.current) return
+
+    firstRenderRef.current = true
+
     const loadTask = async () => {
       try {
         const data = await fetchTask(id)
