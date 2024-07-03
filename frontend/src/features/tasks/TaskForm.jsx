@@ -152,7 +152,7 @@ TaskForm.propTypes = {
     due_date: PropTypes.string,
     status: PropTypes.string,
     priority: PropTypes.string,
-    project_id: PropTypes.string,
+    project_id: PropTypes.object,
   }),
   action: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
