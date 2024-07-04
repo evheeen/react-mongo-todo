@@ -59,7 +59,8 @@ async function updateTask (id, data) {
       description: data.description,
       due_date:    data.due_date,
       status:      data.status,
-      priority:    data.priority
+      priority:    data.priority,
+      project_id:  data.project_id
     })
   })
 

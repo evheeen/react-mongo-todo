@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'react-bootstrap/Modal'
+
+import { fetchAllProjects } from '../../services/projectService'
 
 import PlusIcon from '../../assets/icons/plus'
 
@@ -18,21 +20,42 @@ const priorities = ['lowest', 'low', 'medium', 'high', 'highest']
 
 function TaskForm ({ task, action, onSubmit, show, onHide }) {
   const [formData, setFormData] = useState(initialFormData)
+  const [projects, setProjects] = useState([])
+  const projectsFetched = useRef(false)
 
   useEffect(() => {
     if (task && show) {
       setFormData({
-        title:       task.title       || '',
-        description: task.description || '',
-        due_date:    task.due_date    || '',
-        status:      task.status      || 'pending',
-        priority:    task.priority    || 'medium',
-        project_id:  task.project_id  || ''
+        title:       task.title            || '',
+        description: task.description      || '',
+        due_date:    task.due_date         || '',
+        status:      task.status           || 'pending',
+        priority:    task.priority         || 'medium',
+        project_id:  task.project_id?.$oid || ''
       })
     } else if (!show) {
       setFormData(initialFormData)
     }
   }, [task, show])
+
+  useEffect(() => {
+    if (!show) return
+
+    const loadProjects = async () => {
+      if (projectsFetched.current) return
+
+      projectsFetched.current = true
+
+      try {
+        const data = await fetchAllProjects()
+        setProjects(data)
+      } catch (e) {
+        console.log('Projects loading error:', e)
+      }
+    }
+
+    loadProjects()
+  }, [show])
 
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
@@ -109,7 +132,11 @@ function TaskForm ({ task, action, onSubmit, show, onHide }) {
                     className="form-select"
                   >
                     <option value="">Select Project</option>
-                    {/* Add options for projects */}
+                    {projects.map((project) => (
+                      <option key={project._id.$oid} value={project._id.$oid}>
+                        {project.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
