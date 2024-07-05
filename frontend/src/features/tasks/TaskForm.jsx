@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Modal from 'react-bootstrap/Modal'
 
 import { fetchAllProjects } from '../../services/projectService'
+import { fetchAllLabels } from '../../services/labelService'
 
 import PlusIcon from '../../assets/icons/plus'
 
@@ -12,7 +13,8 @@ const initialFormData = {
   due_date: '',
   status: 'pending',
   priority: 'medium',
-  project_id: ''
+  project_id: '',
+  label_ids: []
 }
 
 const statuses = ['pending', 'in_progress', 'completed', 'cancelled']
@@ -21,17 +23,22 @@ const priorities = ['lowest', 'low', 'medium', 'high', 'highest']
 function TaskForm ({ task, action, onSubmit, show, onHide }) {
   const [formData, setFormData] = useState(initialFormData)
   const [projects, setProjects] = useState([])
+  const [labels, setLabels] = useState([])
+
   const projectsFetched = useRef(false)
+  const labelsFetched = useRef(false)
 
   useEffect(() => {
     if (task && show) {
       setFormData({
-        title:       task.title            || '',
-        description: task.description      || '',
-        due_date:    task.due_date         || '',
-        status:      task.status           || 'pending',
-        priority:    task.priority         || 'medium',
-        project_id:  task.project_id?.$oid || ''
+        title:       task.title       || '',
+        description: task.description || '',
+        due_date:    task.due_date    || '',
+        status:      task.status      || 'pending',
+        priority:    task.priority    || 'medium',
+
+        project_id:  task.project_id?.$oid || '',
+        label_ids:   task.label_ids?.map(label => label.$oid) || []
       })
     } else if (!show) {
       setFormData(initialFormData)
@@ -54,8 +61,33 @@ function TaskForm ({ task, action, onSubmit, show, onHide }) {
       }
     }
 
+    const loadLabels = async () => {
+      if (labelsFetched.current) return
+
+      labelsFetched.current = true
+
+      try {
+        const data = await fetchAllLabels()
+        setLabels(data)
+      } catch (e) {
+        console.log('Labels loading error:', e)
+      }
+    }
+
     loadProjects()
+    loadLabels()
   }, [show])
+
+  const handleLabelChange = (e) => {
+    const { value, checked } = e.target
+
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      label_ids: checked
+        ? [...prevFormData.label_ids, value]
+        : prevFormData.label_ids.filter(id => id !== value)
+    }))
+  }
 
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
@@ -143,9 +175,21 @@ function TaskForm ({ task, action, onSubmit, show, onHide }) {
               <div className="col-lg-6">
                 <div className="mb-3">
                   <label htmlFor="labelIdsInput" className="form-label">Labels</label>
-                  {/* Loop through labels */}
-                  {/* For each label, create a checkbox */}
-                  {/* Handle checkbox changes */}
+                  {labels.map((label) => (
+                    <div key={label._id.$oid} className="form-check">
+                      <input
+                        id={`label-${label._id.$oid}`}
+                        type="checkbox"
+                        value={label._id.$oid}
+                        checked={formData.label_ids.includes(label._id.$oid)}
+                        onChange={handleLabelChange}
+                        className="form-check-input"
+                      />
+                      <label htmlFor={`label-${label._id.$oid}`} className="form-check-label">
+                        {label.name}
+                      </label>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -180,6 +224,7 @@ TaskForm.propTypes = {
     status: PropTypes.string,
     priority: PropTypes.string,
     project_id: PropTypes.object,
+    label_ids: PropTypes.arrayOf(PropTypes.object),
   }),
   action: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,

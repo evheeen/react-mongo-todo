@@ -7,5 +7,5 @@ class Label
 
   has_and_belongs_to_many :tasks
 
-  validates :name, presence: true, length: { maximum: 30 }
+  validates :name, presence: true, length: { maximum: 15 }
 end

@@ -100,7 +100,7 @@ function TasksIndex () {
                       <td className="text-secondary">{task.status}</td>
                       <td className="text-secondary">{task.priority}</td>
                       <td className="text-secondary">{task.project?.name}</td>
-                      <td className="text-secondary"></td>
+                      <td className="text-secondary">{task.labels?.map(label => label.name).join(', ')}</td>
                       <td>
                         <TaskEdit id={task._id.$oid} onUpdate={handleTaskUpdated} />
                         <button onClick={() => deleteTaskHandler(task._id.$oid)} className="btn ms-2">
