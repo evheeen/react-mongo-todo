@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'react-bootstrap/Modal'
+import moment from 'moment'
 
 import { fetchAllProjects } from '../../services/projectService'
 import { fetchAllLabels } from '../../services/labelService'
@@ -33,10 +34,10 @@ function TaskForm ({ task, action, onSubmit, show, onHide }) {
       setFormData({
         title:       task.title       || '',
         description: task.description || '',
-        due_date:    task.due_date    || '',
         status:      task.status      || 'pending',
         priority:    task.priority    || 'medium',
 
+        due_date:    moment(task.due_date).format('YYYY-MM-DDTkk:mm') || '',
         project_id:  task.project_id?.$oid || '',
         label_ids:   task.label_ids?.map(label => label.$oid) || []
       })

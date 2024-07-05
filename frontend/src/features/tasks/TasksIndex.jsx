@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { format } from 'date-fns'
 
 import TaskNew       from './TaskNew'
 import TaskEdit      from './TaskEdit'
@@ -52,6 +53,11 @@ function TasksIndex () {
     }
   }
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString)
+    return format(date, 'hh:mm a · MMMM dd, yyyy')
+  }
+
   if (loading) return <div>Loading...</div>
 
   return (
@@ -96,7 +102,7 @@ function TasksIndex () {
                     <tr key={task._id.$oid}>
                       <td>{task.title}</td>
                       <td className="text-secondary">{task.description}</td>
-                      <td className="text-secondary">{task.due_date}</td>
+                      <td className="text-secondary">{task.due_date && formatDate(task.due_date)}</td>
                       <td className="text-secondary">{task.status}</td>
                       <td className="text-secondary">{task.priority}</td>
                       <td className="text-secondary">{task.project?.name}</td>
