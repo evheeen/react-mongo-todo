@@ -37,7 +37,7 @@ function TaskForm ({ task, action, onSubmit, show, onHide }) {
         status:      task.status      || 'pending',
         priority:    task.priority    || 'medium',
 
-        due_date:    moment(task.due_date).format('YYYY-MM-DDTkk:mm') || '',
+        due_date:    task.due_date ? moment.utc(task.due_date).format('YYYY-MM-DDTHH:mm') : '',
         project_id:  task.project_id?.$oid || '',
         label_ids:   task.label_ids?.map(label => label.$oid) || []
       })
@@ -120,6 +120,7 @@ function TaskForm ({ task, action, onSubmit, show, onHide }) {
                     id="dueDateInput"
                     type="datetime-local"
                     value={formData.due_date}
+                    step="60"
                     onChange={(e) => setFormData({ ...formData, due_date: e.target.value })}
                     className="form-control"
                   />

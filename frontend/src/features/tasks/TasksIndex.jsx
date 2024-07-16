@@ -55,7 +55,7 @@ function TasksIndex () {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
-    return format(date, 'hh:mm a · MMMM dd, yyyy')
+    return format(date.toLocaleString('en-US', { timeZone: 'UTC' }), 'hh:mm a · MMMM dd, yyyy')
   }
 
   if (loading) return <div>Loading...</div>
